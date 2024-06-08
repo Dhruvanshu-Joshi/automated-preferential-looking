@@ -185,3 +185,98 @@ def predict_from_frame(cap):
         if(frame_count>buffer_size):
             break
     return answers,confidences,frames
+
+
+def predict_from_actual_frames(frames):
+    buffer_size=15
+    loc = -5  
+    cursor = -5 
+    gaze_model, face_detector_model, face_classifier_model, face_classifier_data_transforms = load_models()
+    answers = []  # list of answers for each frame
+    confidences = []  # list of confidences for each frame
+    image_sequence = []  # list of (crop, valid) for each frame in the sliding window
+    box_sequence = []  # list of bounding boxes for each frame in the sliding window
+    bbox_sequence = []  # list of bounding boxes for each frame in the sliding window
+    frames_1 = []  # list of frames for each frame in the sliding window
+    from_tracker = []  # list of booleans indicating whether the bounding box was obtained from the tracker
+    last_known_valid_bbox = None  # last known valid bounding box
+    frame_count = 0  # frame counter
+    hor, ver = 0.5, 1  # initial guess for face location
+    cur_fps = video.FPS()  # for debugging purposes
+    last_class_text = ""  # Initialize so that we see the first class assignment as an event to record
+    # ret, frame = cap.read()
+    frame=frames[0]
+    h_start_at=0
+    w_start_at=0
+    h_end_at, w_end_at, channels = frame.shape
+    # print(frames)
+    # print(type(frame))
+    for frame in frames:
+        frame = draw.mask_regions(frame, h_start_at, h_end_at, w_start_at, w_end_at)  # mask roi
+        # frames.append(frame)
+        frames_1.append(frame)
+        cv2_bboxes = detect_face_opencv_dnn(face_detector_model, frame, 0.7)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        if not cv2_bboxes and (last_known_valid_bbox is None or not "False"):
+            answers.append(classes['noface'])  # if face detector fails, treat as away and mark invalid
+            confidences.append(-1)
+            image = np.zeros((1, 100, 100, 3), np.float64)
+            my_box = np.array([0, 0, 0, 0, 0])
+            image_sequence.append((image, True))
+            box_sequence.append(my_box)
+            bbox_sequence.append(None)
+            from_tracker.append(False)
+        else:
+            if cv2_bboxes:
+                from_tracker.append(False)
+            else:
+                from_tracker.append(True)
+                cv2_bboxes = [last_known_valid_bbox]
+            selected_bbox = select_face(cv2_bboxes, frame, face_classifier_model, face_classifier_data_transforms, hor, ver, 'cpu')
+            crop, my_box = extract_crop(frame, selected_bbox)
+            if selected_bbox is None:
+                    answers.append(classes['nobabyface'])  # if selecting face fails, treat as away and mark invalid
+                    confidences.append(-1)
+                    image = np.zeros((1, 100,100, 3), np.float64)
+                    my_box = np.array([0, 0, 0, 0, 0])
+                    image_sequence.append((image, True))
+                    box_sequence.append(my_box)
+                    bbox_sequence.append(None)
+            else:
+                if crop.size == 0:
+                    raise ValueError("crop size is 0, what just happend?")
+                answers.append(classes['left'])  # if face detector succeeds, treat as left and mark valid
+                confidences.append(-1)
+                image_sequence.append((crop, False))
+                box_sequence.append(my_box)
+                bbox_sequence.append(selected_bbox)
+                if not from_tracker[-1]:
+                    last_known_valid_bbox = selected_bbox.copy()
+            if len(image_sequence) == 9:  # we have enough frames for prediction, predict for middle frame
+                cur_frame = frames_1[cursor]
+                cur_bbox = bbox_sequence[cursor]
+                is_from_tracker = from_tracker[cursor]
+                frames_1.pop(0)
+                bbox_sequence.pop(0)
+                from_tracker.pop(0)
+                if not image_sequence[9 // 2][1]:  # if middle image is valid
+                    to_predict = {"imgs": torch.tensor(np.array([x[0] for x in image_sequence[0::2]]), dtype=torch.float).squeeze().permute(0, 3, 1, 2).to('cpu'),
+                                    "boxs": torch.tensor(np.array(box_sequence[::2]), dtype=torch.float).to('cpu')
+                                    }
+                    with torch.set_grad_enabled(False):
+                        outputs = gaze_model(to_predict)  # actual gaze prediction
+                        probs = torch.nn.functional.softmax(outputs, dim=1)
+                        _, prediction = torch.max(outputs, 1)
+                        confidence, _ = torch.max(probs, 1)
+                        float32_conf = confidence.cpu().numpy()[0]
+                        int32_pred = prediction.cpu().numpy()[0]
+                    answers[loc] = int32_pred  # update answers for the middle frame
+                    confidences[loc] = float32_conf  # update confidences for the middle frame
+                image_sequence.pop(0)
+                box_sequence.pop(0)
+        # ret, frame = cap.read()
+        frame_count += 1
+        if(frame_count>buffer_size):
+            # assert 0
+            break
+    return answers,confidences,frames_1

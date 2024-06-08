@@ -125,6 +125,13 @@ def fixedincrement_icatcher(response, min, max, fixed):
         key_resp = keyboard.Keyboard()
     
     cap = cv2.VideoCapture(0)
+    # fourcc_1 = cv2.VideoWriter_fourcc(*'XVID')
+    # out_1 = cv2.VideoWriter('output_1.avi', fourcc_1, 20.0, (640, 480))
+    predict_frames=[]
+    actual_predict=[]
+    contrast_list=[]
+    spatial_list=[]
+    opt_list=[]
     # --- Initialize components for Routine "set_values" ---
     # Set experiment start values for variable component contrast
     if response=='1':
@@ -558,19 +565,39 @@ def fixedincrement_icatcher(response, min, max, fixed):
                         thisExp.timestampOnFlip(win, 'text_4.stopped')
                         text_4.setAutoDraw(False)
                 # predict the gaze direction from the collected frames
+                # if(rep==0):
+                #     # print("gaze detection")
+                    # answers,confidences,frames= predict_from_frame(cap)
+                    # vid_frames += frames
+                    # # print(answers)
+                    # # print(confidences)
+                    # # print(frames)
+                    # # print(len(frames))
+                    # if answers[np.argmax(confidences)]==b:
+                    #     correct = 1  # correct non-response
+                    # else:
+                    #     correct = 0
+                #     rep+=1
+
                 if(rep==0):
-                    # print("gaze detection")
-                    answers,confidences,frames= predict_from_frame(cap)
-                    vid_frames += frames
-                    # print(answers)
-                    # print(confidences)
-                    # print(frames)
-                    # print(len(frames))
-                    if answers[np.argmax(confidences)]==b:
-                        correct = 1  # correct non-response
-                    else:
-                        correct = 0
+                    frames = []
+                    ret, frame = cap.read()
+                    buffer_size=15
+                    frame_count=0
+                    while ret:
+                        frames.append(frame)
+                        ret, frame = cap.read()
+                        frame_count += 1
+                        if(frame_count>buffer_size):
+                            break
+                    predict_frames.append(frames)
+                    actual_predict.append(b)
+                    opt_list.append(opt)
+                    contrast_list.append(contrast)
+                    spatial_list.append(spatial)
+                    # feedback_list.append(feedback)
                     rep+=1
+
                 if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
                     core.quit()
                 
@@ -598,17 +625,17 @@ def fixedincrement_icatcher(response, min, max, fixed):
               # failed to respond (incorrectly)
             # store data for psychometric_func (TrialHandler)
             psychometric_func.addData('key_resp_2.keys',"")
-            psychometric_func.addData('key_resp_2.corr', correct)
-            if opt==1 or opt==2:
-                if contrast in feedback:
-                    feedback[contrast].append(correct)  # Append the new value to the existing list
-                else:
-                    feedback[contrast] = [correct]
-            else:
-                if spatial in feedback:
-                    feedback[spatial].append(correct)  # Append the new value to the existing list
-                else:
-                    feedback[spatial] = [correct]
+# //         psychometric_func.addData('key_resp_2.corr', correct)
+# //        if opt==1 or opt==2:
+# //            if contrast in feedback:
+# //                feedback[contrast].append(correct)  # Append the new value to the existing list
+# //            else:
+# //                feedback[contrast] = [correct]
+# //        else:
+# //            if spatial in feedback:
+# //                feedback[spatial].append(correct)  # Append the new value to the existing list
+# //            else:
+# //                feedback[spatial] = [correct]
             
             # the Routine "central_fixation" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
@@ -631,68 +658,92 @@ def fixedincrement_icatcher(response, min, max, fixed):
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
             
-            # --- Run Routine "delay" ---
-            while continueRoutine and routineTimer.getTime() < 0.5:
-                # get current time
-                t = routineTimer.getTime()
-                tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-                tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-                frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-                # update/draw components on each frame
+            # # --- Run Routine "delay" ---
+            # while continueRoutine and routineTimer.getTime() < 0.5:
+            #     # get current time
+            #     t = routineTimer.getTime()
+            #     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            #     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            #     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            #     # update/draw components on each frame
                 
-                # *polygon_3* updates
-                if polygon_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    polygon_3.frameNStart = frameN  # exact frame index
-                    polygon_3.tStart = t  # local t and not account for scr refresh
-                    polygon_3.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(polygon_3, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'polygon_3.started')
-                    polygon_3.setAutoDraw(True)
-                if polygon_3.status == STARTED:
-                    # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > polygon_3.tStartRefresh + 0.5-frameTolerance:
-                        # keep track of stop time/frame for later
-                        polygon_3.tStop = t  # not accounting for scr refresh
-                        polygon_3.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'polygon_3.stopped')
-                        polygon_3.setAutoDraw(False)
+            #     # *polygon_3* updates
+            #     if polygon_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            #         # keep track of start time/frame for later
+            #         polygon_3.frameNStart = frameN  # exact frame index
+            #         polygon_3.tStart = t  # local t and not account for scr refresh
+            #         polygon_3.tStartRefresh = tThisFlipGlobal  # on global time
+            #         win.timeOnFlip(polygon_3, 'tStartRefresh')  # time at next scr refresh
+            #         # add timestamp to datafile
+            #         thisExp.timestampOnFlip(win, 'polygon_3.started')
+            #         polygon_3.setAutoDraw(True)
+            #     if polygon_3.status == STARTED:
+            #         # is it time to stop? (based on global clock, using actual start)
+            #         if tThisFlipGlobal > polygon_3.tStartRefresh + 0.5-frameTolerance:
+            #             # keep track of stop time/frame for later
+            #             polygon_3.tStop = t  # not accounting for scr refresh
+            #             polygon_3.frameNStop = frameN  # exact frame index
+            #             # add timestamp to datafile
+            #             thisExp.timestampOnFlip(win, 'polygon_3.stopped')
+            #             polygon_3.setAutoDraw(False)
                 
-                # check for quit (typically the Esc key)
-                if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-                    core.quit()
+            #     # check for quit (typically the Esc key)
+            #     if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+            #         core.quit()
                 
-                # check if all components have finished
-                if not continueRoutine:  # a component has requested a forced-end of Routine
-                    routineForceEnded = True
-                    break
-                continueRoutine = False  # will revert to True if at least one component still running
-                for thisComponent in delayComponents:
-                    if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                        continueRoutine = True
-                        break  # at least one component has not yet finished
+            #     # check if all components have finished
+            #     if not continueRoutine:  # a component has requested a forced-end of Routine
+            #         routineForceEnded = True
+            #         break
+            #     continueRoutine = False  # will revert to True if at least one component still running
+            #     for thisComponent in delayComponents:
+            #         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            #             continueRoutine = True
+            #             break  # at least one component has not yet finished
                 
-                # refresh the screen
-                if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                    win.flip()
+            #     # refresh the screen
+            #     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            #         win.flip()
             
-            # --- Ending Routine "delay" ---
-            for thisComponent in delayComponents:
-                if hasattr(thisComponent, "setAutoDraw"):
-                    thisComponent.setAutoDraw(False)
-            # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+            # # --- Ending Routine "delay" ---
+            # for thisComponent in delayComponents:
+            #     if hasattr(thisComponent, "setAutoDraw"):
+            #         thisComponent.setAutoDraw(False)
+            # # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
-            else:
-                routineTimer.addTime(-0.500000)
+            # else:
+            #     routineTimer.addTime(-0.500000)
             thisExp.nextEntry()
             
         # completed 4.0 repeats of 'psychometric_func'
         
         thisExp.nextEntry()
+    
+    for b, frames, contrast, spatial in zip(actual_predict, predict_frames, contrast_list, spatial_list):
+        answers, confidences,frames= predict_from_actual_frames(frames)
+        vid_frames += frames
+        # print(answers)
+        # print(confidences)
+        # print(frames)
+        # print(len(frames))
+        if answers[np.argmax(confidences)]==b:
+            correct = 1  # correct non-response
+        else:
+            correct = 0
         
+        psychometric_func.addData('key_resp_2.corr', correct)
+        if opt==1 or opt==2:
+            if contrast in feedback:
+                feedback[contrast].append(correct)  # Append the new value to the existing list
+            else:
+                feedback[contrast] = [correct]
+        else:
+            if spatial in feedback:
+                feedback[spatial].append(correct)  # Append the new value to the existing list
+            else:
+                feedback[spatial] = [correct]
+
     # completed 19.0 repeats of 'ga_loop'
 
 
