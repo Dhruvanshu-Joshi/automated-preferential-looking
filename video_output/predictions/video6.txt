@@ -1,0 +1,61 @@
+b: 1 (left), Answer: 2
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.5, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.5610092271509817, correct=1
+-----
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.6294627058970835, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.706268772311377, correct=1
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.6294627058970835, correct=1
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.6294627058970835, correct=1
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.706268772311377, correct=1
+-----
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.6294627058970835, correct=0
+-----
+b: 1 (left), Answer: 1
+Details: opt=5, level=0.5610092271509817, correct=1
+-----
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.5, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.4456254690668728, correct=1
+-----
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.4456254690668728, correct=0
+-----
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.5, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.4456254690668728, correct=1
+-----
+b: 1 (left), Answer: 1
+Details: opt=5, level=0.3971641173621408, correct=1
+-----
+b: 1 (left), Answer: 1
+Details: opt=5, level=0.3971641173621408, correct=1
+-----
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.353972892192069, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.3154786722400967, correct=1
+-----
+b: 1 (left), Answer: 2
+Details: opt=5, level=0.2811706625951746, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: opt=5, level=0.2811706625951746, correct=1
+-----

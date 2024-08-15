@@ -1,0 +1,60 @@
+b: 2 (right), Answer: 2
+Details: contrast=1.0, spatial=0.20000000000000004, correct=1
+-----
+b: 2 (right), Answer: 2
+Details: contrast=1.0, spatial=0.20000000000000004, correct=1
+-----
+b: 1 (left), Answer: 2
+Details: contrast=1.0, spatial=5.000000000000001, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: contrast=1.0, spatial=2.2360679774997894, correct=1
+-----
+b: 1 (left), Answer: 1
+Details: contrast=1.0, spatial=1.0, correct=1
+-----
+b: 2 (right), Answer: 1
+Details: contrast=1.0, spatial=5.000000000000001, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: contrast=1.0, spatial=1.0, correct=1
+-----
+b: 2 (right), Answer: 1
+Details: contrast=1.0, spatial=1.0, correct=0
+-----
+b: 1 (left), Answer: 1
+Details: contrast=1.0, spatial=0.447213595499958, correct=1
+-----
+b: 2 (right), Answer: 1
+Details: contrast=1.0, spatial=5.000000000000001, correct=0
+-----
+b: 1 (left), Answer: 1
+Details: contrast=1.0, spatial=0.20000000000000004, correct=1
+-----
+b: 2 (right), Answer: 1
+Details: contrast=1.0, spatial=0.447213595499958, correct=0
+-----
+b: 1 (left), Answer: 2
+Details: contrast=1.0, spatial=0.447213595499958, correct=0
+-----
+b: 1 (left), Answer: 2
+Details: contrast=1.0, spatial=0.20000000000000004, correct=0
+-----
+b: 1 (left), Answer: 2
+Details: contrast=1.0, spatial=1.0, correct=0
+-----
+b: 1 (left), Answer: 2
+Details: contrast=1.0, spatial=2.2360679774997894, correct=0
+-----
+b: 1 (left), Answer: 2
+Details: contrast=1.0, spatial=2.2360679774997894, correct=0
+-----
+b: 2 (right), Answer: 2
+Details: contrast=1.0, spatial=2.2360679774997894, correct=1
+-----
+b: 2 (right), Answer: 2
+Details: contrast=1.0, spatial=0.447213595499958, correct=1
+-----
+b: 1 (left), Answer: 1
+Details: contrast=1.0, spatial=5.000000000000001, correct=1
+-----

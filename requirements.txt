@@ -2,7 +2,6 @@ numpy
 matplotlib
 PsychoPy
 opencv-python
-tkinter
 torch>=1.11.0
 torchvision>=0.12
 Pillow 

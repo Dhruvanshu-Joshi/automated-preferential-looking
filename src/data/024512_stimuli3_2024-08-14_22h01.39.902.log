@@ -1,0 +1,468 @@
+4.0818 	WARNING 	Speech-to-text recognition module for PocketSphinx is not available (use command `pip install SpeechRecognition` to get it). Transcription will be unavailable using that service this session.
+4.0825 	WARNING 	Speech-to-text recognition using Google online services is not available (use command `pip install google-api-core google-auth google-cloud google-cloud-speech googleapis-common-protos` to get it). Transcription will be unavailable using that service this session.
+4.0840 	ERROR 	Support for the `sounddevice` audio backend is not available this session. Please install `psychopy-sounddevice` and restart the session to enable support.
+28.9183 	WARNING 	User requested fullscreen with size [1536  864], but screen is actually [1920, 1080]. Using actual size
+29.5854 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x0000021BE4DDC510>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x0000021BE4DDC390>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x0000021BE3AC8F90>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x0000021BF2C98C10>, multiSample=False, name='window1', numSamples=2, pos=(0, 0), screen=0, size=array([1920, 1080]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+29.5856 	EXP 	window1: mouseVisible = True
+29.5856 	EXP 	window1: backgroundImage = None
+29.5856 	EXP 	window1: backgroundFit = 'cover'
+29.5858 	EXP 	window1: mouseVisible = False
+29.5858 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+29.5858 	EXP 	window1: recordFrameIntervals = False
+29.7515 	EXP 	window1: recordFrameIntervals = True
+29.9351 	EXP 	Screen (0) actual frame rate measured at 60.01Hz
+29.9351 	EXP 	window1: recordFrameIntervals = False
+33.1175 	EXP 	Created text_2 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='Press spacebar to start the experiment\n\n', units='height', win=Window(...), wrapWidth=1)
+33.1618 	EXP 	Created GA = GratingStim(__class__=<class 'psychopy.visual.grating.GratingStim'>, anchor='center', autoDraw=False, autoLog=True, blendmode='avg', color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-2.0, interpolate=True, mask='circle', maskParams=None, name='GA', opacity=1.0, ori=0.0, phase=array([0., 0.]), pos=array([0., 0.]), rgbPedestal=array([0., 0., 0.]), sf=array([1., 1.]), size=array([8.5]), tex='sqr', texRes=512.0, units='deg', win=Window(...))
+33.1656 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-3.0, fillColor=array([0., 0., 0.]), fillColorSpace='rgb', fillRGB=array([0., 0., 0.]), interpolate=True, lineColor=array([0., 0., 0.]), lineColorSpace='rgb', lineRGB=array([0., 0., 0.]), lineWidth=1.0, name='polygon', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.05, 0.05]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+33.1668 	EXP 	Created text_3 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-4.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_3', opacity=1.0, ori=0.0, pos=array([0.   , 0.125]), rgb=UNKNOWN, text='', units='height', win=Window(...), wrapWidth=1)
+33.1691 	EXP 	Created polygon_2 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-2.0, fillColor=array([0., 0., 0.]), fillColorSpace='rgb', fillRGB=array([0., 0., 0.]), interpolate=True, lineColor=array([0., 0., 0.]), lineColorSpace='rgb', lineRGB=array([0., 0., 0.]), lineWidth=1.0, name='polygon_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.05, 0.05]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+33.1701 	EXP 	Created text_4 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-3.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_4', opacity=1.0, ori=0.0, pos=array([0.   , 0.125]), rgb=UNKNOWN, text='', units='height', win=Window(...), wrapWidth=1)
+33.1723 	EXP 	Created polygon_3 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([0., 0., 0.]), fillColorSpace='rgb', fillRGB=array([0., 0., 0.]), interpolate=True, lineColor=array([0., 0., 0.]), lineColorSpace='rgb', lineRGB=array([0., 0., 0.]), lineWidth=1.0, name='polygon_3', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.05, 0.05]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+33.1756 	EXP 	text_2: autoDraw = True
+34.2717 	EXP 	Created sequence: random, trialTypes=1, nReps=20, seed=None
+34.2721 	EXP 	New trial (rep=0, index=0): None
+34.2732 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+34.2734 	EXP 	New trial (rep=0, index=0): None
+34.3551 	DATA 	Keypress: space
+34.3581 	EXP 	text_2: autoDraw = False
+34.3581 	EXP 	GA: sf = array([0.5, 0.5])
+34.3581 	EXP 	GA: phase = array([0., 0.])
+34.3581 	EXP 	text_3: height = 0.05
+34.3581 	EXP 	text_3: height = 0.05
+34.3581 	EXP 	text_3: height = 0.05
+34.3581 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+34.3581 	EXP 	text_4: height = 0.05
+34.3581 	EXP 	text_4: height = 0.05
+34.3581 	EXP 	text_4: height = 0.05
+34.3581 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+34.3581 	EXP 	GA: autoDraw = True
+34.3581 	EXP 	polygon_2: autoDraw = True
+34.3581 	EXP 	text_4: autoDraw = True
+34.3581 	EXP 	GA: tex = 'sqr'
+37.3538 	EXP 	New trial (rep=1, index=0): None
+37.3551 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+37.3554 	EXP 	New trial (rep=0, index=0): None
+37.3928 	EXP 	GA: autoDraw = False
+37.3928 	EXP 	polygon_2: autoDraw = False
+37.3928 	EXP 	text_4: autoDraw = False
+37.3928 	EXP 	GA: autoDraw = False
+37.3928 	EXP 	polygon_2: autoDraw = False
+37.3928 	EXP 	text_4: autoDraw = False
+37.3928 	EXP 	GA: sf = array([0.5, 0.5])
+37.3928 	EXP 	GA: phase = array([0., 0.])
+37.3928 	EXP 	text_3: height = 0.05
+37.3928 	EXP 	text_3: height = 0.05
+37.3928 	EXP 	text_3: height = 0.05
+37.3928 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+37.3928 	EXP 	text_4: height = 0.05
+37.3928 	EXP 	text_4: height = 0.05
+37.3928 	EXP 	text_4: height = 0.05
+37.3928 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+37.3928 	EXP 	GA: autoDraw = True
+37.3928 	EXP 	polygon_2: autoDraw = True
+37.3928 	EXP 	text_4: autoDraw = True
+37.3928 	EXP 	GA: tex = 'sqr'
+40.3862 	EXP 	New trial (rep=2, index=0): None
+40.3872 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+40.3876 	EXP 	New trial (rep=0, index=0): None
+40.4218 	EXP 	GA: autoDraw = False
+40.4218 	EXP 	polygon_2: autoDraw = False
+40.4218 	EXP 	text_4: autoDraw = False
+40.4218 	EXP 	GA: autoDraw = False
+40.4218 	EXP 	polygon_2: autoDraw = False
+40.4218 	EXP 	text_4: autoDraw = False
+40.4218 	EXP 	GA: sf = array([0.5, 0.5])
+40.4218 	EXP 	GA: phase = array([0., 0.])
+40.4218 	EXP 	text_3: height = 0.05
+40.4218 	EXP 	text_3: height = 0.05
+40.4218 	EXP 	text_3: height = 0.05
+40.4218 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+40.4218 	EXP 	text_4: height = 0.05
+40.4218 	EXP 	text_4: height = 0.05
+40.4218 	EXP 	text_4: height = 0.05
+40.4218 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+40.4218 	EXP 	GA: autoDraw = True
+40.4218 	EXP 	polygon_2: autoDraw = True
+40.4218 	EXP 	text_4: autoDraw = True
+40.4218 	EXP 	GA: tex = 'sqr'
+43.4200 	EXP 	New trial (rep=3, index=0): None
+43.4212 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+43.4214 	EXP 	New trial (rep=0, index=0): None
+43.4564 	EXP 	GA: autoDraw = False
+43.4564 	EXP 	polygon_2: autoDraw = False
+43.4564 	EXP 	text_4: autoDraw = False
+43.4564 	EXP 	GA: autoDraw = False
+43.4564 	EXP 	polygon_2: autoDraw = False
+43.4564 	EXP 	text_4: autoDraw = False
+43.4564 	EXP 	GA: sf = array([0.5, 0.5])
+43.4564 	EXP 	GA: phase = array([0., 0.])
+43.4564 	EXP 	text_3: height = 0.05
+43.4564 	EXP 	text_3: height = 0.05
+43.4564 	EXP 	text_3: height = 0.05
+43.4564 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+43.4564 	EXP 	text_4: height = 0.05
+43.4564 	EXP 	text_4: height = 0.05
+43.4564 	EXP 	text_4: height = 0.05
+43.4564 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+43.4564 	EXP 	GA: autoDraw = True
+43.4564 	EXP 	polygon_2: autoDraw = True
+43.4564 	EXP 	text_4: autoDraw = True
+43.4564 	EXP 	GA: tex = 'sqr'
+46.4534 	EXP 	New trial (rep=4, index=0): None
+46.4544 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+46.4546 	EXP 	New trial (rep=0, index=0): None
+46.4879 	EXP 	GA: autoDraw = False
+46.4879 	EXP 	polygon_2: autoDraw = False
+46.4879 	EXP 	text_4: autoDraw = False
+46.4879 	EXP 	GA: autoDraw = False
+46.4879 	EXP 	polygon_2: autoDraw = False
+46.4879 	EXP 	text_4: autoDraw = False
+46.4879 	EXP 	GA: sf = array([0.5, 0.5])
+46.4879 	EXP 	GA: phase = array([0., 0.])
+46.4879 	EXP 	text_3: height = 0.05
+46.4879 	EXP 	text_3: height = 0.05
+46.4879 	EXP 	text_3: height = 0.05
+46.4879 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+46.4879 	EXP 	text_4: height = 0.05
+46.4879 	EXP 	text_4: height = 0.05
+46.4879 	EXP 	text_4: height = 0.05
+46.4879 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+46.4879 	EXP 	GA: autoDraw = True
+46.4879 	EXP 	polygon_2: autoDraw = True
+46.4879 	EXP 	text_4: autoDraw = True
+46.4879 	EXP 	GA: tex = 'sqr'
+49.4861 	EXP 	New trial (rep=5, index=0): None
+49.4873 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+49.4875 	EXP 	New trial (rep=0, index=0): None
+49.5247 	EXP 	GA: autoDraw = False
+49.5247 	EXP 	polygon_2: autoDraw = False
+49.5247 	EXP 	text_4: autoDraw = False
+49.5247 	EXP 	GA: autoDraw = False
+49.5247 	EXP 	polygon_2: autoDraw = False
+49.5247 	EXP 	text_4: autoDraw = False
+49.5247 	EXP 	GA: sf = array([0.5, 0.5])
+49.5247 	EXP 	GA: phase = array([0., 0.])
+49.5247 	EXP 	text_3: height = 0.05
+49.5247 	EXP 	text_3: height = 0.05
+49.5247 	EXP 	text_3: height = 0.05
+49.5247 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+49.5247 	EXP 	text_4: height = 0.05
+49.5247 	EXP 	text_4: height = 0.05
+49.5247 	EXP 	text_4: height = 0.05
+49.5247 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+49.5247 	EXP 	GA: autoDraw = True
+49.5247 	EXP 	polygon_2: autoDraw = True
+49.5247 	EXP 	text_4: autoDraw = True
+49.5247 	EXP 	GA: tex = 'sqr'
+52.5198 	EXP 	New trial (rep=6, index=0): None
+52.5208 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+52.5209 	EXP 	New trial (rep=0, index=0): None
+52.5479 	EXP 	GA: autoDraw = False
+52.5479 	EXP 	polygon_2: autoDraw = False
+52.5479 	EXP 	text_4: autoDraw = False
+52.5479 	EXP 	GA: autoDraw = False
+52.5479 	EXP 	polygon_2: autoDraw = False
+52.5479 	EXP 	text_4: autoDraw = False
+52.5479 	EXP 	GA: sf = array([0.5, 0.5])
+52.5479 	EXP 	GA: phase = array([0., 0.])
+52.5479 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+52.5479 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+52.5479 	EXP 	GA: autoDraw = True
+52.5479 	EXP 	polygon_2: autoDraw = True
+52.5479 	EXP 	text_4: autoDraw = True
+52.5479 	EXP 	GA: tex = 'sqr'
+55.5368 	EXP 	New trial (rep=7, index=0): None
+55.5378 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+55.5380 	EXP 	New trial (rep=0, index=0): None
+55.5658 	EXP 	GA: autoDraw = False
+55.5658 	EXP 	polygon_2: autoDraw = False
+55.5658 	EXP 	text_4: autoDraw = False
+55.5658 	EXP 	GA: autoDraw = False
+55.5658 	EXP 	polygon_2: autoDraw = False
+55.5658 	EXP 	text_4: autoDraw = False
+55.5658 	EXP 	GA: sf = array([0.5, 0.5])
+55.5658 	EXP 	GA: phase = array([0., 0.])
+55.5658 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+55.5658 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+55.5658 	EXP 	GA: autoDraw = True
+55.5658 	EXP 	polygon_2: autoDraw = True
+55.5658 	EXP 	text_4: autoDraw = True
+55.5658 	EXP 	GA: tex = 'sqr'
+58.5526 	EXP 	New trial (rep=8, index=0): None
+58.5538 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+58.5540 	EXP 	New trial (rep=0, index=0): None
+58.5907 	EXP 	GA: autoDraw = False
+58.5907 	EXP 	polygon_2: autoDraw = False
+58.5907 	EXP 	text_4: autoDraw = False
+58.5907 	EXP 	GA: autoDraw = False
+58.5907 	EXP 	polygon_2: autoDraw = False
+58.5907 	EXP 	text_4: autoDraw = False
+58.5907 	EXP 	GA: sf = array([0.5, 0.5])
+58.5907 	EXP 	GA: phase = array([0., 0.])
+58.5907 	EXP 	text_3: height = 0.05
+58.5907 	EXP 	text_3: height = 0.05
+58.5907 	EXP 	text_3: height = 0.05
+58.5907 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+58.5907 	EXP 	text_4: height = 0.05
+58.5907 	EXP 	text_4: height = 0.05
+58.5907 	EXP 	text_4: height = 0.05
+58.5907 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+58.5907 	EXP 	GA: autoDraw = True
+58.5907 	EXP 	polygon_2: autoDraw = True
+58.5907 	EXP 	text_4: autoDraw = True
+58.5907 	EXP 	GA: tex = 'sqr'
+61.5861 	EXP 	New trial (rep=9, index=0): None
+61.5874 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+61.5877 	EXP 	New trial (rep=0, index=0): None
+61.6260 	EXP 	GA: autoDraw = False
+61.6260 	EXP 	polygon_2: autoDraw = False
+61.6260 	EXP 	text_4: autoDraw = False
+61.6260 	EXP 	GA: autoDraw = False
+61.6260 	EXP 	polygon_2: autoDraw = False
+61.6260 	EXP 	text_4: autoDraw = False
+61.6260 	EXP 	GA: sf = array([0.5, 0.5])
+61.6260 	EXP 	GA: phase = array([0., 0.])
+61.6260 	EXP 	text_3: height = 0.05
+61.6260 	EXP 	text_3: height = 0.05
+61.6260 	EXP 	text_3: height = 0.05
+61.6260 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+61.6260 	EXP 	text_4: height = 0.05
+61.6260 	EXP 	text_4: height = 0.05
+61.6260 	EXP 	text_4: height = 0.05
+61.6260 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+61.6260 	EXP 	GA: autoDraw = True
+61.6260 	EXP 	polygon_2: autoDraw = True
+61.6260 	EXP 	text_4: autoDraw = True
+61.6260 	EXP 	GA: tex = 'sqr'
+64.6187 	EXP 	New trial (rep=10, index=0): None
+64.6198 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+64.6200 	EXP 	New trial (rep=0, index=0): None
+64.6553 	EXP 	GA: autoDraw = False
+64.6553 	EXP 	polygon_2: autoDraw = False
+64.6553 	EXP 	text_4: autoDraw = False
+64.6553 	EXP 	GA: autoDraw = False
+64.6553 	EXP 	polygon_2: autoDraw = False
+64.6553 	EXP 	text_4: autoDraw = False
+64.6553 	EXP 	GA: sf = array([0.5, 0.5])
+64.6553 	EXP 	GA: phase = array([0., 0.])
+64.6553 	EXP 	text_3: height = 0.05
+64.6553 	EXP 	text_3: height = 0.05
+64.6553 	EXP 	text_3: height = 0.05
+64.6553 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+64.6553 	EXP 	text_4: height = 0.05
+64.6553 	EXP 	text_4: height = 0.05
+64.6553 	EXP 	text_4: height = 0.05
+64.6553 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+64.6553 	EXP 	GA: autoDraw = True
+64.6553 	EXP 	polygon_2: autoDraw = True
+64.6553 	EXP 	text_4: autoDraw = True
+64.6553 	EXP 	GA: tex = 'sqr'
+67.6522 	EXP 	New trial (rep=11, index=0): None
+67.6551 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+67.6553 	EXP 	New trial (rep=0, index=0): None
+67.6813 	EXP 	GA: autoDraw = False
+67.6813 	EXP 	polygon_2: autoDraw = False
+67.6813 	EXP 	text_4: autoDraw = False
+67.6813 	EXP 	GA: autoDraw = False
+67.6813 	EXP 	polygon_2: autoDraw = False
+67.6813 	EXP 	text_4: autoDraw = False
+67.6813 	EXP 	GA: sf = array([0.5, 0.5])
+67.6813 	EXP 	GA: phase = array([0., 0.])
+67.6813 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+67.6813 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+67.6813 	EXP 	GA: autoDraw = True
+67.6813 	EXP 	polygon_2: autoDraw = True
+67.6813 	EXP 	text_4: autoDraw = True
+67.6813 	EXP 	GA: tex = 'sqr'
+70.6692 	EXP 	New trial (rep=12, index=0): None
+70.6706 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+70.6709 	EXP 	New trial (rep=0, index=0): None
+70.7061 	EXP 	GA: autoDraw = False
+70.7061 	EXP 	polygon_2: autoDraw = False
+70.7061 	EXP 	text_4: autoDraw = False
+70.7061 	EXP 	GA: autoDraw = False
+70.7061 	EXP 	polygon_2: autoDraw = False
+70.7061 	EXP 	text_4: autoDraw = False
+70.7061 	EXP 	GA: sf = array([0.5, 0.5])
+70.7061 	EXP 	GA: phase = array([0., 0.])
+70.7061 	EXP 	text_3: height = 0.05
+70.7061 	EXP 	text_3: height = 0.05
+70.7061 	EXP 	text_3: height = 0.05
+70.7061 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+70.7061 	EXP 	text_4: height = 0.05
+70.7061 	EXP 	text_4: height = 0.05
+70.7061 	EXP 	text_4: height = 0.05
+70.7061 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+70.7061 	EXP 	GA: autoDraw = True
+70.7061 	EXP 	polygon_2: autoDraw = True
+70.7061 	EXP 	text_4: autoDraw = True
+70.7061 	EXP 	GA: tex = 'sqr'
+73.7023 	EXP 	New trial (rep=13, index=0): None
+73.7036 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+73.7038 	EXP 	New trial (rep=0, index=0): None
+73.7404 	EXP 	GA: autoDraw = False
+73.7404 	EXP 	polygon_2: autoDraw = False
+73.7404 	EXP 	text_4: autoDraw = False
+73.7404 	EXP 	GA: autoDraw = False
+73.7404 	EXP 	polygon_2: autoDraw = False
+73.7404 	EXP 	text_4: autoDraw = False
+73.7404 	EXP 	GA: sf = array([0.5, 0.5])
+73.7404 	EXP 	GA: phase = array([0., 0.])
+73.7404 	EXP 	text_3: height = 0.05
+73.7404 	EXP 	text_3: height = 0.05
+73.7404 	EXP 	text_3: height = 0.05
+73.7404 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+73.7404 	EXP 	text_4: height = 0.05
+73.7404 	EXP 	text_4: height = 0.05
+73.7404 	EXP 	text_4: height = 0.05
+73.7404 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+73.7404 	EXP 	GA: autoDraw = True
+73.7404 	EXP 	polygon_2: autoDraw = True
+73.7404 	EXP 	text_4: autoDraw = True
+73.7404 	EXP 	GA: tex = 'sqr'
+76.7353 	EXP 	New trial (rep=14, index=0): None
+76.7363 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+76.7365 	EXP 	New trial (rep=0, index=0): None
+76.7726 	EXP 	GA: autoDraw = False
+76.7726 	EXP 	polygon_2: autoDraw = False
+76.7726 	EXP 	text_4: autoDraw = False
+76.7726 	EXP 	GA: autoDraw = False
+76.7726 	EXP 	polygon_2: autoDraw = False
+76.7726 	EXP 	text_4: autoDraw = False
+76.7726 	EXP 	GA: sf = array([0.5, 0.5])
+76.7726 	EXP 	GA: phase = array([0., 0.])
+76.7726 	EXP 	text_3: height = 0.05
+76.7726 	EXP 	text_3: height = 0.05
+76.7726 	EXP 	text_3: height = 0.05
+76.7726 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+76.7726 	EXP 	text_4: height = 0.05
+76.7726 	EXP 	text_4: height = 0.05
+76.7726 	EXP 	text_4: height = 0.05
+76.7726 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 1.000'
+76.7726 	EXP 	GA: autoDraw = True
+76.7726 	EXP 	polygon_2: autoDraw = True
+76.7726 	EXP 	text_4: autoDraw = True
+76.7726 	EXP 	GA: tex = 'sqr'
+79.7688 	EXP 	New trial (rep=15, index=0): None
+79.7700 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+79.7702 	EXP 	New trial (rep=0, index=0): None
+79.8064 	EXP 	GA: autoDraw = False
+79.8064 	EXP 	polygon_2: autoDraw = False
+79.8064 	EXP 	text_4: autoDraw = False
+79.8064 	EXP 	GA: autoDraw = False
+79.8064 	EXP 	polygon_2: autoDraw = False
+79.8064 	EXP 	text_4: autoDraw = False
+79.8064 	EXP 	GA: sf = array([0.5, 0.5])
+79.8064 	EXP 	GA: phase = array([0., 0.])
+79.8064 	EXP 	text_3: height = 0.05
+79.8064 	EXP 	text_3: height = 0.05
+79.8064 	EXP 	text_3: height = 0.05
+79.8064 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+79.8064 	EXP 	text_4: height = 0.05
+79.8064 	EXP 	text_4: height = 0.05
+79.8064 	EXP 	text_4: height = 0.05
+79.8064 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.376'
+79.8064 	EXP 	GA: autoDraw = True
+79.8064 	EXP 	polygon_2: autoDraw = True
+79.8064 	EXP 	text_4: autoDraw = True
+79.8064 	EXP 	GA: tex = 'sqr'
+82.8018 	EXP 	New trial (rep=16, index=0): None
+82.8030 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+82.8034 	EXP 	New trial (rep=0, index=0): None
+82.8403 	EXP 	GA: autoDraw = False
+82.8403 	EXP 	polygon_2: autoDraw = False
+82.8403 	EXP 	text_4: autoDraw = False
+82.8403 	EXP 	GA: autoDraw = False
+82.8403 	EXP 	polygon_2: autoDraw = False
+82.8403 	EXP 	text_4: autoDraw = False
+82.8403 	EXP 	GA: sf = array([0.5, 0.5])
+82.8403 	EXP 	GA: phase = array([0., 0.])
+82.8403 	EXP 	text_3: height = 0.05
+82.8403 	EXP 	text_3: height = 0.05
+82.8403 	EXP 	text_3: height = 0.05
+82.8403 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+82.8403 	EXP 	text_4: height = 0.05
+82.8403 	EXP 	text_4: height = 0.05
+82.8403 	EXP 	text_4: height = 0.05
+82.8403 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.053'
+82.8403 	EXP 	GA: autoDraw = True
+82.8403 	EXP 	polygon_2: autoDraw = True
+82.8403 	EXP 	text_4: autoDraw = True
+82.8403 	EXP 	GA: tex = 'sqr'
+85.8356 	EXP 	New trial (rep=17, index=0): None
+85.8370 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+85.8372 	EXP 	New trial (rep=0, index=0): None
+85.8735 	EXP 	GA: autoDraw = False
+85.8735 	EXP 	polygon_2: autoDraw = False
+85.8735 	EXP 	text_4: autoDraw = False
+85.8735 	EXP 	GA: autoDraw = False
+85.8735 	EXP 	polygon_2: autoDraw = False
+85.8735 	EXP 	text_4: autoDraw = False
+85.8735 	EXP 	GA: sf = array([0.5, 0.5])
+85.8735 	EXP 	GA: phase = array([0., 0.])
+85.8735 	EXP 	text_3: height = 0.05
+85.8735 	EXP 	text_3: height = 0.05
+85.8735 	EXP 	text_3: height = 0.05
+85.8735 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+85.8735 	EXP 	text_4: height = 0.05
+85.8735 	EXP 	text_4: height = 0.05
+85.8735 	EXP 	text_4: height = 0.05
+85.8735 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+85.8735 	EXP 	GA: autoDraw = True
+85.8735 	EXP 	polygon_2: autoDraw = True
+85.8735 	EXP 	text_4: autoDraw = True
+85.8735 	EXP 	GA: tex = 'sqr'
+88.8684 	EXP 	New trial (rep=18, index=0): None
+88.8695 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+88.8697 	EXP 	New trial (rep=0, index=0): None
+88.9059 	EXP 	GA: autoDraw = False
+88.9059 	EXP 	polygon_2: autoDraw = False
+88.9059 	EXP 	text_4: autoDraw = False
+88.9059 	EXP 	GA: autoDraw = False
+88.9059 	EXP 	polygon_2: autoDraw = False
+88.9059 	EXP 	text_4: autoDraw = False
+88.9059 	EXP 	GA: sf = array([0.5, 0.5])
+88.9059 	EXP 	GA: phase = array([0., 0.])
+88.9059 	EXP 	text_3: height = 0.05
+88.9059 	EXP 	text_3: height = 0.05
+88.9059 	EXP 	text_3: height = 0.05
+88.9059 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+88.9059 	EXP 	text_4: height = 0.05
+88.9059 	EXP 	text_4: height = 0.05
+88.9059 	EXP 	text_4: height = 0.05
+88.9059 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.141'
+88.9059 	EXP 	GA: autoDraw = True
+88.9059 	EXP 	polygon_2: autoDraw = True
+88.9059 	EXP 	text_4: autoDraw = True
+88.9059 	EXP 	GA: tex = 'sqr'
+91.9017 	EXP 	New trial (rep=19, index=0): None
+91.9027 	EXP 	Created sequence: random, trialTypes=1, nReps=1, seed=None
+91.9028 	EXP 	New trial (rep=0, index=0): None
+91.9379 	EXP 	GA: autoDraw = False
+91.9379 	EXP 	polygon_2: autoDraw = False
+91.9379 	EXP 	text_4: autoDraw = False
+91.9379 	EXP 	GA: autoDraw = False
+91.9379 	EXP 	polygon_2: autoDraw = False
+91.9379 	EXP 	text_4: autoDraw = False
+91.9379 	EXP 	GA: sf = array([0.5, 0.5])
+91.9379 	EXP 	GA: phase = array([0., 0.])
+91.9379 	EXP 	text_3: height = 0.05
+91.9379 	EXP 	text_3: height = 0.05
+91.9379 	EXP 	text_3: height = 0.05
+91.9379 	EXP 	text_3: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+91.9379 	EXP 	text_4: height = 0.05
+91.9379 	EXP 	text_4: height = 0.05
+91.9379 	EXP 	text_4: height = 0.05
+91.9379 	EXP 	text_4: text = 'Spatial frequency: 0.500\nContrast: 0.020'
+91.9379 	EXP 	GA: autoDraw = True
+91.9379 	EXP 	polygon_2: autoDraw = True
+91.9379 	EXP 	text_4: autoDraw = True
+91.9379 	EXP 	GA: tex = 'sqr'
+94.9493 	EXP 	GA: autoDraw = False
+94.9493 	EXP 	polygon_2: autoDraw = False
+94.9493 	EXP 	text_4: autoDraw = False
+94.9493 	EXP 	GA: autoDraw = False
+94.9493 	EXP 	polygon_2: autoDraw = False
+94.9493 	EXP 	text_4: autoDraw = False
+95.0659 	EXP 	window1: mouseVisible = True

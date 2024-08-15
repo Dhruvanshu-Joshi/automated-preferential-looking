@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 
 class ExperimentGUI:
     def __init__(self, root):
@@ -13,6 +13,8 @@ class ExperimentGUI:
         self.experiment_var = tk.StringVar(value="")
         self.eye_tracker_var = tk.StringVar(value="Eye Tracker")
         self.hemisphere_var = tk.StringVar(value="")
+        self.video_source_var = tk.StringVar(value="Camera")
+        self.video_file_path = ""
 
         # First screen: Select Test
         self.screen1 = ttk.Frame(self.root)
@@ -237,8 +239,8 @@ class ExperimentGUI:
                 self.param1_scale.set(1)
                 self.param1_scale.pack()
 
-                self.max_scale.set(0)
-                self.param2_scale(0)
+                # self.max_scale.set(0)
+                # self.param2_scale(0)
             elif(test_type=="Vernier Acuity"):
                 self.min_scale = tk.Scale(self.screen4, from_=0, to=1, resolution=0.001, orient=tk.HORIZONTAL, label="Start Phase:")
                 self.min_scale.set(0.5)  
@@ -259,8 +261,39 @@ class ExperimentGUI:
         back_button4 = ttk.Button(self.screen4, text="Back", command=self.show_hemisphere_screen, style="Custom.TButton")
         back_button4.pack(pady=20)
 
-        start_button = ttk.Button(self.screen4, text="Start Experiment", command=self.start_experiment, style="Custom.TButton")
+        next_button4 = ttk.Button(self.screen4, text="Next", command=self.show_video_source_screen, style="Custom.TButton")
+        next_button4.pack(pady=20)
+
+    def show_video_source_screen(self):
+        if self.screen1:
+            self.screen1.pack_forget()
+        if self.screen2:
+            self.screen2.pack_forget()
+        if self.screen3:
+            self.screen3.pack_forget()
+        if self.screen4:
+            self.screen4.pack_forget()
+
+        self.screen5 = ttk.Frame(self.root)
+        self.screen5.pack(expand=True, fill='both')
+
+        video_source_label = ttk.Label(self.screen5, text="Select Video Source:", font=("Helvetica", 20))
+        video_source_label.pack(pady=50)
+
+        video_source_options = ["Camera", "Saved Video"]
+        video_source_menu = tk.OptionMenu(self.screen5, self.video_source_var, *video_source_options, command=self.on_video_source_change)
+        video_source_menu.config(font=("Helvetica", 12))
+        video_source_menu.pack(pady=20)
+
+        back_button5 = ttk.Button(self.screen5, text="Back", command=self.show_parameter_screen, style="Custom.TButton")
+        back_button5.pack(pady=20)
+
+        start_button = ttk.Button(self.screen5, text="Start Experiment", command=self.start_experiment, style="Custom.TButton")
         start_button.pack(pady=20)
+
+    def on_video_source_change(self, value):
+        if value == "Saved Video":
+            self.video_file_path = filedialog.askopenfilename(title="Select a video file", filetypes=[("Video files", "*.mp4;*.avi;*.mov")])
 
     def start_experiment(self):
         if hasattr(self, 'param2_scale'):
@@ -280,6 +313,8 @@ class ExperimentGUI:
         "max_var": max_var,
         "param1": self.param1_scale.get(),
         "param2": param2,
+        "video_source": self.video_source_var.get(),
+        "video_file_path": self.video_file_path,
         } 
         self.root.quit()
         return selected_values

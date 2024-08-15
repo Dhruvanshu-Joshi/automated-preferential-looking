@@ -21,6 +21,10 @@ def main():
     del gui
     # print("obj deleted")
     # print("Selected Values:", selected_values)
+    if selected_values["video_source"]=="Saved Video":
+        path=selected_values["video_file_path"]
+    else:
+        path=0
     if selected_values["experiment"]=="Fixed Increment":
         if selected_values["test"]=="Contrast Sensitivity":
             if selected_values["eye_tracker"]=="Eye Tracker":
@@ -32,7 +36,8 @@ def main():
                 feedback,value,response= fixedincrement(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"])
             else:
                 case='1'
-                feedback,value,response= fixedincrement_icatcher(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"])
+                feedback,value,response= fixedincrement_icatcher(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"], path)
+                # print('b')
                 
         elif selected_values["test"]=="Spatial Frequency":
             if selected_values["eye_tracker"]=="Eye Tracker":
@@ -43,7 +48,7 @@ def main():
                 feedback,value,response=fixedincrement(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"])
             else:
                 case='3'
-                feedback,value,response= fixedincrement_icatcher(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"])
+                feedback,value,response= fixedincrement_icatcher(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"], path)
         else:
             if selected_values["eye_tracker"]=="Eye Tracker":
                 if selected_values["hemisphere"]== "Two Hemispheres":
@@ -53,8 +58,8 @@ def main():
                 feedback,value,response=fixedincrement_vernier(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"],selected_values["param2"])
             else:
                 case='5'
-                feedback,value,response=fixedincrement_vernier_icatcher(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"],selected_values["param2"])
-                
+                feedback,value,response=fixedincrement_vernier_icatcher(case,selected_values["min_var"],selected_values["max_var"],selected_values["param1"],selected_values["param2"], path)
+        # assert 0      
         psychometric_function(feedback,value,response)
 
     elif selected_values["experiment"]=="Staircase":
@@ -67,7 +72,7 @@ def main():
                 feedback,value,response=staircase(case,selected_values["min_var"],selected_values["param1"])
             else:
                 case='1'
-                feedback,value,response=staircase_icatcher(case,selected_values["min_var"],selected_values["param1"])
+                feedback,value,response=staircase_icatcher(case,selected_values["min_var"],selected_values["param1"], path)
         elif selected_values["test"]=="Spatial Frequency":
             if selected_values["eye_tracker"]=="Eye Tracker":
                 if selected_values["hemisphere"]== "Two Hemispheres":
@@ -77,7 +82,7 @@ def main():
                 feedback,value,response=staircase(case,selected_values["min_var"],selected_values["param1"])
             else:
                 case='3'
-                feedback,value,response=staircase_icatcher(case,selected_values["min_var"],selected_values["param1"])
+                feedback,value,response=staircase_icatcher(case,selected_values["min_var"],selected_values["param1"], path)
         else:
             if selected_values["eye_tracker"]=="Eye Tracker":
                 if selected_values["hemisphere"]== "Two Hemispheres":
@@ -87,7 +92,7 @@ def main():
                 feedback,value,response=staircase_vernier(case,selected_values["min_var"],selected_values["param1"],selected_values["param2"])
             else:
                 case='5'
-                feedback,value,response=staircase_vernier_icatcher(case,selected_values["min_var"],selected_values["param1"],selected_values["param2"])
+                feedback,value,response=staircase_vernier_icatcher(case,selected_values["min_var"],selected_values["param1"],selected_values["param2"], path)
         psychometric_function(feedback,value,case)
 # core.quit()
 

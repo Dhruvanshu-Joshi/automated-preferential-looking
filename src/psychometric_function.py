@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
+import sys
 
 
-def psychometric_function(feedback,value,response):
+def psychometric_function(feedback,value,response,app):
     
     plt.plot(value,feedback, marker='o')
         # naming the x axis
@@ -18,4 +19,7 @@ def psychometric_function(feedback,value,response):
    
 
     plt.show()
+    # plt.pause(3)
     plt.close()
+    sys.exit(app.exec())
+    # sys.exit()
