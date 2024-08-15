@@ -90,24 +90,24 @@ def fixedincrement(response, min, max, fixed):
     else:
         frameDur = 1.0 / 60.0  # could not measure, so guess
    
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
+    # if os_name == "Windows" or os_name == "Linux" :
+    #      # --- Setup input devices ---
+    #     ioConfig = {}
+    #     # Setup iohub keyboard
+    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
 
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
+    #     ioSession = '1'
+    #     if 'session' in expInfo:
+    #         ioSession = str(expInfo['session'])
+    #     ioServer = io.launchHubServer(window=win, **ioConfig)
+    #     eyetracker = None
+    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
+    # else:
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
 
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    # create a default keyboard (e.g. to check for escape)
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
 
     # --- Initialize components for Routine "start_opt" ---
     if response=='1' or response=='3':
@@ -935,25 +935,25 @@ def fixedincrement_vernier(response, min_phase, max_phase, contrast,spatial):
         frameDur = 1.0 / round(expInfo['frameRate'])
     else:
         frameDur = 1.0 / 60.0  # could not measure, so guess
-    # --- Setup input devices ---
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
+    # # --- Setup input devices ---
+    # if os_name == "Windows" or os_name == "Linux" :
+    #      # --- Setup input devices ---
+    #     ioConfig = {}
+    #     # Setup iohub keyboard
+    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
 
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
+    #     ioSession = '1'
+    #     if 'session' in expInfo:
+    #         ioSession = str(expInfo['session'])
+    #     ioServer = io.launchHubServer(window=win, **ioConfig)
+    #     eyetracker = None
+    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
+    # else:
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
 
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    # create a default keyboard (e.g. to check for escape)
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
 
     # --- Initialize components for Routine "start_opt" ---
     if response=='5':

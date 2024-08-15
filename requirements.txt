@@ -1,6 +1,6 @@
 numpy
 matplotlib
-PsychoPy
+psychopy
 opencv-python
 tkinter
 torch>=1.11.0
@@ -11,4 +11,9 @@ tqdm
 pooch
 batch-face
 pathos
+psychopy_sounddevice
 psychtoolbox
+psychopy.visual
+psychopy.visual.backends.pygletbackend
+psychopy.visual.line
+PyQt6

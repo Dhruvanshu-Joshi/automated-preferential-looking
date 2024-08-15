@@ -25,7 +25,7 @@ from numpy.random import random, randint, normal, shuffle, choice as randchoice
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
-import psychopy.iohub as io
+# import psychopy.iohub as io
 from psychopy.hardware import keyboard
 import platform
 
@@ -87,24 +87,24 @@ def staircase(response, str_contrast, str_spatial):
    
     feedback={}
     value=[]
-    # create a default keyboard (e.g. to check for escape)
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
+    # # create a default keyboard (e.g. to check for escape)
+    # if os_name == "Windows" or os_name == "Linux" :
+    #      # --- Setup input devices ---
+    #     ioConfig = {}
+    #     # Setup iohub keyboard
+    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
 
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    #     ioSession = '1'
+    #     if 'session' in expInfo:
+    #         ioSession = str(expInfo['session'])
+    #     ioServer = io.launchHubServer(window=win, **ioConfig)
+    #     eyetracker = None
+    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
+    # else:
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
+    # create a default keyboard (e.g. to check for escape)
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
     # --- Initialize components for Routine "start_exp" ---
     text = visual.TextStim(win=win, name='text',
         text='Welcome to visual stimuli.\nContrast Sensitivity Experiments:\nPress 1 for stimulus in two hemiscreens.\nPress 2 for stimulus in four quadrants.\nSpatial Frequency Sensitivity Experiments:\nPress 3 for stimulus in two hemiscreens.\nPress 4 for stimulus in four quadrants.\n\n',
@@ -1237,25 +1237,25 @@ def staircase_vernier(response,start_phase,contrast,spatial):
    
     feedback={}
     value=[]
+    # # create a default keyboard (e.g. to check for escape)
+    # if os_name == "Windows" or os_name == "Linux" :
+    #      # --- Setup input devices ---
+    #     ioConfig = {}
+    #     # Setup iohub keyboard
+    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
+
+    #     ioSession = '1'
+    #     if 'session' in expInfo:
+    #         ioSession = str(expInfo['session'])
+    #     ioServer = io.launchHubServer(window=win, **ioConfig)
+    #     eyetracker = None
+    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
+    # else:
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
+
     # create a default keyboard (e.g. to check for escape)
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
-
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
 
     # --- Initialize components for Routine "start_opt" ---
     if response=='5':

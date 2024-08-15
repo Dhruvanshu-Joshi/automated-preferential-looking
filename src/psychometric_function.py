@@ -1,5 +1,7 @@
+import matplotlib
 import matplotlib.pyplot as plt
 
+matplotlib.use('Qt5Agg')
 
 def psychometric_function(feedback,value,response):
     
