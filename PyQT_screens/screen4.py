@@ -9,10 +9,14 @@ class SelectHemWindow(QMainWindow):
 
     def __init__(self, panda_image_path, eye_image_path, eye_image_path1, eye_image_path2, hover_image_path1, hover_image_path2, hover_image_path3):
         super().__init__()
-
         self.selected_hemisphere = None
         self.selected_hemisphere_button = None
+        self.mode = None  # Initialize mode
 
+        # Set up the UI
+        self.init_ui(panda_image_path, eye_image_path, eye_image_path1, eye_image_path2, hover_image_path1, hover_image_path2, hover_image_path3)
+
+    def init_ui(self, panda_image_path, eye_image_path, eye_image_path1, eye_image_path2, hover_image_path1, hover_image_path2, hover_image_path3):
         gradient = QLinearGradient(0, 0, 0, 1)
         gradient.setCoordinateMode(QGradient.CoordinateMode.ObjectBoundingMode)
         gradient.setColorAt(0.0, QColor(255, 255, 255))
@@ -40,7 +44,7 @@ class SelectHemWindow(QMainWindow):
         # Add stretch to push content to the center
         main_layout.addStretch(1)
 
-        # Create the horizontal layout for the buttons and panda image
+        # Create the horizontal layout for the buttons
         center_layout = QHBoxLayout()
 
         # Add stretch to center the content
@@ -53,20 +57,11 @@ class SelectHemWindow(QMainWindow):
         self.panda_label.setAlignment(Qt.AlignmentFlag.AlignRight)
         center_layout.addWidget(self.panda_label)
 
-        # Create a vertical layout for the test buttons
-        button_layout = QVBoxLayout()
-        button_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        # Create a vertical layout for the buttons
+        self.button_layout = QVBoxLayout()
+        self.button_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-        # Load the eye image
-        eye_pixmap = QPixmap(eye_image_path).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
-
-        # Create test buttons with eye images as visual pointers
-        self.create_test_button(button_layout, eye_pixmap, "2 Hemisphere", "#EBFFC5;", "#008682", 0)
-        button_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
-        eye_pixmap1 = QPixmap(eye_image_path1).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
-        self.create_test_button(button_layout, eye_pixmap1, "4 Hemisphere", "#EBFFC5;", "#008682", 1)
-
-        center_layout.addLayout(button_layout)
+        center_layout.addLayout(self.button_layout)
 
         # Add stretch to center the content
         center_layout.addStretch(1)
@@ -110,7 +105,12 @@ class SelectHemWindow(QMainWindow):
                 border-radius: 40px;
                 border: 2px solid #008000;
             }
-           l
+            QPushButton:hover {
+                background-color: #79D877;
+            }
+            QPushButton:pressed {
+                background-color: #5EBB61;
+            }
         """)
         self.next_button.setFixedSize(80, 80)
         self.next_button.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -121,8 +121,6 @@ class SelectHemWindow(QMainWindow):
         # Connect navigation buttons to signals
         self.prev_button.clicked.connect(self.navigate_prev.emit)
         self.next_button.clicked.connect(self.on_next_button_clicked)
-        # self.next_button.clicked.connect(self.navigate_next.emit)
-        self.close()
 
         # Set the central widget of the main window
         self.setCentralWidget(main_widget)
@@ -130,6 +128,31 @@ class SelectHemWindow(QMainWindow):
         # Remove window borders and show the window in full screen mode
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.showFullScreen()
+
+    def set_mode(self, _, device_type, eye_image_path, eye_image_path1):
+        if device_type == 'Eye Tracker':
+            self.mode = 'device'
+        elif device_type == 'Eye Tracking Model':
+            self.mode = 'model'
+        else:
+            print(device_type)
+            print("Unknown device type")
+            return
+
+        # Update the UI based on the mode
+        self.update_ui_based_on_mode(eye_image_path, eye_image_path1)
+
+    def update_ui_based_on_mode(self, eye_image_path, eye_image_path1):
+        # Load the eye images
+        eye_pixmap = QPixmap(eye_image_path).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
+        eye_pixmap1 = QPixmap(eye_image_path1).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
+
+        if self.mode == 'device':
+            self.create_test_button(self.button_layout, eye_pixmap, "Two Hemispheres", "#EBFFC5;", "#008682", 0)
+            self.button_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
+            self.create_test_button(self.button_layout, eye_pixmap1, "Four Hemispheres", "#EBFFC5;", "#008682", 1)
+        elif self.mode == 'model':
+            self.create_test_button(self.button_layout, eye_pixmap, "Two Hemispheres", "#EBFFC5;", "#008682", 0)
 
     def create_test_button(self, layout, icon_pixmap, text, color, txt_color, hover_index):
         button_layout = QHBoxLayout()
@@ -201,11 +224,10 @@ class SelectHemWindow(QMainWindow):
         self.navigate_next.emit(text)
 
     def on_next_button_clicked(self):
-        if self.selected_hemisphere:
-            self.navigate_next.emit(self.selected_hemisphere)
+        if self.mode:
+            self.navigate_next.emit(self.mode)
         else:
-            print("No hemisphere selected!")
-        # self.navigate_next.emit(self.selected_hemisphere)
+            print("No mode selected!")
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Q:
@@ -217,8 +239,7 @@ class SelectHemWindow(QMainWindow):
         return self.selected_hemisphere_button
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-
+    app = QApplication([])
     # Paths to the provided images
     panda_image_path = 'panda7.png'
     eye_image_path = 'eye1.png'  # Replace with the correct path to the eye image
@@ -230,4 +251,5 @@ if __name__ == "__main__":
 
     window = SelectHemWindow(panda_image_path, eye_image_path, eye_image_path, eye_image_path2, hover_image_path1, hover_image_path2, hover_image_path3)
 
-    sys.exit(app.exec())
+    window.set_mode('-','Eye Tracking Model', eye_image_path, eye_image_path1)  # or 'Eye Tracking Model'
+    app.exec()

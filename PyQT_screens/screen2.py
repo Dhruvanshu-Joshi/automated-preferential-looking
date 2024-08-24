@@ -201,8 +201,6 @@ class SelectTestWindow(QMainWindow):
         self.navigate_next.emit(text)
 
     def get_test(self):
-        # if not self.selected_button:
-        #     raise ValueError('Please choose button corresponding to the test that you wish to perform')
         return self.selected_test
 
     def on_next_button_clicked(self):

@@ -14,6 +14,7 @@ class SelectTestWindow2(QMainWindow):
         self.selected_device = None
         self.selected_experiment_button = None
         self.selected_device_button = None
+        self.mode = None
 
         # Create main widget and layout
         main_widget = QWidget(self)
@@ -50,11 +51,11 @@ class SelectTestWindow2(QMainWindow):
         button_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         # Create test buttons with eye images as visual pointers
-        eye_pixmap1 = QPixmap(eye_image_path1).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
-        self.create_test_button(button_layout, eye_pixmap1, "Staircase", "#05703c", "#fefefe", 0)
+        eye_pixmap1 = QPixmap(eye_image_path2).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
+        self.create_test_button(button_layout, eye_pixmap1, "Fixed Incrementor", "#0258B2", "#DBFAF6", 1)
         button_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
-        eye_pixmap2 = QPixmap(eye_image_path2).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
-        self.create_test_button(button_layout, eye_pixmap2, "Fixed Incrementor", "#0258B2", "#DBFAF6", 1)
+        eye_pixmap2 = QPixmap(eye_image_path1).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio)
+        self.create_test_button(button_layout, eye_pixmap2, "Staircase", "#05703c", "#fefefe", 0)
 
         center_layout.addLayout(button_layout)
         center_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
@@ -109,12 +110,13 @@ class SelectTestWindow2(QMainWindow):
         device_layout.addStretch(1)
 
         # Create device type buttons with images
-        self.device_button = self.create_device_button(device_layout, device_image_path, "Eye tracker")
+        self.device_button = self.create_device_button(device_layout, device_image_path, "Eye Tracker")
         # device_layout.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
         screen_size = QApplication.primaryScreen().size()
         device_layout.addSpacerItem(QSpacerItem(screen_size.width()//2, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed))
         self.tracker_button = self.create_device_button(device_layout, tracker_image_path, "Eye Tracking Model")
-
+        self.device_button.clicked.connect(self.set_device_mode)
+        self.tracker_button.clicked.connect(self.set_tracker_mode)
         # Add stretch to center the content
         device_layout.addStretch(1)
 
@@ -215,6 +217,14 @@ class SelectTestWindow2(QMainWindow):
 
         layout.addLayout(button_layout)
 
+    def set_device_mode(self):
+        self.mode = 'device'
+
+    def set_tracker_mode(self):
+        self.mode = 'model'
+
+    def go_to_screen4(self):
+        self.navigate_next.emit(self.mode)
 
     def adjust_color_brightness(self, color, factor):
         r = int(color[1:3], 16)

@@ -50,8 +50,6 @@ class FullScreenWindow(QMainWindow):
         self.showFullScreen()
 
     def start_experiment(self):
-        # self.experiment_window = ExperimentWindow()
-        # self.experiment_window.show()
         self.button.clicked.connect(self.navigate_next.emit)
         self.close()
 

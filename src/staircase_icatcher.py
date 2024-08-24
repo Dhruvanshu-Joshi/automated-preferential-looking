@@ -13,12 +13,16 @@ If you publish work using this script the most relevant publication is:
 
 # --- Import packages ---
 from predict import *
+from result import *
+from psychometric_function import *
 import cv2
 from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QEventLoop
 
 import numpy as np  # whole numpy lib is available, prepend 'np.'
 from numpy import (sin, cos, tan, log, log10, pi, average,
@@ -32,7 +36,7 @@ from psychopy.hardware import keyboard
 import platform
 
 
-def staircase_icatcher(response, str_contrast, str_spatial):
+def staircase_icatcher(response, str_contrast, str_spatial, path):
     # Ensure that relative paths start from the same directory as this script
     os_name = platform.system()
     _thisDir = os.path.dirname(os.path.abspath(__file__))
@@ -68,8 +72,12 @@ def staircase_icatcher(response, str_contrast, str_spatial):
 
     endExpNow = False  # flag for 'escape' or other condition => quit the exp
     frameTolerance = 0.001  # how close to onset before 'same' frame
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(path)
     vid_frames=[]
+    predict_frames=[]
+    actual_predict=[]
+    level_list=[]
+    opt_list=[]
     # Start Code - component code to be run after the window creation
 
     # --- Setup the Window ---
@@ -89,22 +97,9 @@ def staircase_icatcher(response, str_contrast, str_spatial):
    
     feedback={}
     value=[]
-    # create a default keyboard (e.g. to check for escape)
-    # if os_name == "Windows" or os_name == "Linux" :
-    #      # --- Setup input devices ---
-    #     ioConfig = {}
-    #     # Setup iohub keyboard
-    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-
-    #     ioSession = '1'
-    #     if 'session' in expInfo:
-    #         ioSession = str(expInfo['session'])
-    #     ioServer = io.launchHubServer(window=win, **ioConfig)
-    #     eyetracker = None
-    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    # else:
     ioConfig = {}
     ioSession = ioServer = eyetracker = None
+
     # create a default keyboard (e.g. to check for escape)
     defaultKeyboard = keyboard.Keyboard(backend='ptb')
    
@@ -226,6 +221,8 @@ def staircase_icatcher(response, str_contrast, str_spatial):
     continueRoutine = True
     routineForceEnded = False
    
+    min_count=0
+
     # reset timers
     t = 0
     _timeToFirstFrame = win.getFutureFlipTime(clock="now")
@@ -355,6 +352,7 @@ def staircase_icatcher(response, str_contrast, str_spatial):
         for paramName in thisOpt1:
             exec('{} = thisOpt1[paramName]'.format(paramName))
 
+    staircase_loop=None
     for thisOpt1 in opt1:
         currentLoop = opt1
         # abbreviate parameter names if possible (e.g. rgb = thisOpt1.rgb)
@@ -376,6 +374,7 @@ def staircase_icatcher(response, str_contrast, str_spatial):
         for thisStaircase_loop in staircase_loop:
             currentLoop = staircase_loop
             level = thisStaircase_loop
+            
             if level==0.02 and min_count==5:
                 break
             elif level==0.02 and min_count<5:
@@ -503,19 +502,25 @@ def staircase_icatcher(response, str_contrast, str_spatial):
                 # check for quit (typically the Esc key)
                 if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
                     core.quit()
-                
+
                 if(rep==0):
-                    # print("gaze detection")
-                    answers,confidences,frames= predict_from_frame(cap)
-                    vid_frames += frames
-                    # print(answers)
-                    # print(confidences)
-                    # print(frames)
-                    if answers[np.argmax(confidences)]==b:
-                        correct = 1  # correct non-response
-                    else:
-                        correct = 0
+                    frames = []
+                    ret, frame = cap.read()
+                    buffer_size=15
+                    frame_count=0
+                    while ret:
+                        frames.append(frame)
+                        ret, frame = cap.read()
+                        frame_count += 1
+                        if(frame_count>buffer_size):
+                            break
+                    predict_frames.append(frames)
+                    actual_predict.append(b)
+                    opt_list.append(opt)
+                    level_list.append(level)
+                    # feedback_list.append(feedback)
                     rep+=1
+
                 if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
                     core.quit()
                 # check if all components have finished
@@ -537,15 +542,8 @@ def staircase_icatcher(response, str_contrast, str_spatial):
                 if hasattr(thisComponent, "setAutoDraw"):
                     thisComponent.setAutoDraw(False)
          
-            staircase_loop.addResponse(correct, level)
-            # feedback.append(key_resp_2.corr)
-            # value.append(level)
-            if level in feedback:
-                feedback[level].append(correct)  # Append the new value to the existing list
-            else:
-                feedback[level] = [correct]
-            # staircase_loop.addOtherData('key_resp_2.rt', correct)
-            # the Routine "central_fixation" was not non-slip safe, so reset the non-slip timer
+            # staircase_loop.addResponse(correct, level)
+            staircase_loop.addResponse(np.random.choice([0,1], size=1), level)
             routineTimer.reset()
             
             # --- Prepare to start Routine "delay" ---
@@ -565,63 +563,11 @@ def staircase_icatcher(response, str_contrast, str_spatial):
             t = 0
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
-            
-            # --- Run Routine "delay" ---
-            while continueRoutine and routineTimer.getTime() < 0.5:
-                # get current time
-                t = routineTimer.getTime()
-                tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-                tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-                frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-                # update/draw components on each frame
-                
-                # *polygon_3* updates
-                if polygon_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    polygon_3.frameNStart = frameN  # exact frame index
-                    polygon_3.tStart = t  # local t and not account for scr refresh
-                    polygon_3.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(polygon_3, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'polygon_3.started')
-                    polygon_3.setAutoDraw(True)
-                if polygon_3.status == STARTED:
-                    # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > polygon_3.tStartRefresh + 0.5-frameTolerance:
-                        # keep track of stop time/frame for later
-                        polygon_3.tStop = t  # not accounting for scr refresh
-                        polygon_3.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'polygon_3.stopped')
-                        polygon_3.setAutoDraw(False)
-                
-                # check for quit (typically the Esc key)
-                if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-                    core.quit()
-                
-                # check if all components have finished
-                if not continueRoutine:  # a component has requested a forced-end of Routine
-                    routineForceEnded = True
-                    break
-                continueRoutine = False  # will revert to True if at least one component still running
-                for thisComponent in delayComponents:
-                    if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                        continueRoutine = True
-                        break  # at least one component has not yet finished
-                
-                # refresh the screen
-                if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                    win.flip()
-            
-            # --- Ending Routine "delay" ---
-            for thisComponent in delayComponents:
-                if hasattr(thisComponent, "setAutoDraw"):
-                    thisComponent.setAutoDraw(False)
+
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
-            else:
-                routineTimer.addTime(-0.500000)
+
             thisExp.nextEntry()
             
         # staircase completed
@@ -631,6 +577,31 @@ def staircase_icatcher(response, str_contrast, str_spatial):
     # completed opt1 repeats of 'opt1'
 
 
+    if staircase_loop is not None:
+        cap.release() 
+        app = QApplication(sys.argv)
+        loading_screen = progressWindow()
+        loading_screen.show()
+        # Create a QEventLoop to wait for the worker to finish
+        loop = QEventLoop()
+        # Create and start the worker thread
+        worker = Worker(actual_predict, predict_frames, level_list,
+                        opt, feedback, staircase_loop=staircase_loop)
+        worker.progressChanged.connect(loading_screen.update_progress)
+        worker.finished.connect(loop.quit)
+        worker.finished.connect(loading_screen.on_finish)
+        worker.start()
+        
+        # # sys.exit(app.exec())
+        loop.exec() 
+        # completed 19.0 repeats of 'ga_loop'
+        vid_frames = worker.vid_frames
+
+    predict_frames_2=[]
+    actual_predict_2=[]
+    level_list_2=[]
+    opt_list_2=[]
+    staircase_loop2 = None
     # set up handler to look after randomisation of conditions etc
     opt2 = data.TrialHandler(nReps=opt2, method='random', 
         extraInfo=expInfo, originPath=-1,
@@ -806,27 +777,28 @@ def staircase_icatcher(response, str_contrast, str_spatial):
                 if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                     win.flip()
                 if(rep==0):
-                    # print("gaze detection")
-                    answers,confidences,frames= predict_from_frame(cap)
-                    vid_frames += frames
-                    # print(answers)
-                    # print(confidences)
-                    # print(frames)
-                    if answers[np.argmax(confidences)]==b:
-                        correct = 1  # correct non-response
-                    else:
-                        correct = 0
+                    frames = []
+                    ret, frame = cap.read()
+                    buffer_size=15
+                    frame_count=0
+                    while ret:
+                        frames.append(frame)
+                        ret, frame = cap.read()
+                        frame_count += 1
+                        if(frame_count>buffer_size):
+                            break
+                    predict_frames_2.append(frames)
+                    actual_predict_2.append(b)
+                    opt_list_2.append(opt)
+                    level_list_2.append(level)
                     rep+=1
             # --- Ending Routine "central_fixation_2" ---
             for thisComponent in central_fixation_2Components:
                 if hasattr(thisComponent, "setAutoDraw"):
                     thisComponent.setAutoDraw(False)
     
-            staircase_loop2.addResponse(correct, level)
-            if level in feedback:
-                feedback[level].append(correct)  # Append the new value to the existing list
-            else:
-                feedback[level] = [correct]
+            # staircase_loop2.addResponse(correct, level)
+            staircase_loop2.addResponse(np.random.choice([0,1], size=1), level)
             staircase_loop2.addOtherData('key_resp_3.rt', '')
             # the Routine "central_fixation_2" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
@@ -849,78 +821,49 @@ def staircase_icatcher(response, str_contrast, str_spatial):
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
             
-            # --- Run Routine "delay_2" ---
-            while continueRoutine and routineTimer.getTime() < 0.5:
-                # get current time
-                t = routineTimer.getTime()
-                tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-                tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-                frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-                # update/draw components on each frame
-                
-                # *polygon_6* updates
-                if polygon_6.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    polygon_6.frameNStart = frameN  # exact frame index
-                    polygon_6.tStart = t  # local t and not account for scr refresh
-                    polygon_6.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(polygon_6, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'polygon_6.started')
-                    polygon_6.setAutoDraw(True)
-                if polygon_6.status == STARTED:
-                    # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > polygon_6.tStartRefresh + 0.5-frameTolerance:
-                        # keep track of stop time/frame for later
-                        polygon_6.tStop = t  # not accounting for scr refresh
-                        polygon_6.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'polygon_6.stopped')
-                        polygon_6.setAutoDraw(False)
-                
-                # check for quit (typically the Esc key)
-                if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-                    core.quit()
-                
-                # check if all components have finished
-                if not continueRoutine:  # a component has requested a forced-end of Routine
-                    routineForceEnded = True
-                    break
-                continueRoutine = False  # will revert to True if at least one component still running
-                for thisComponent in delay_2Components:
-                    if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                        continueRoutine = True
-                        break  # at least one component has not yet finished
-                
-                # refresh the screen
-                if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                    win.flip()
-            
-            # --- Ending Routine "delay_2" ---
-            for thisComponent in delay_2Components:
-                if hasattr(thisComponent, "setAutoDraw"):
-                    thisComponent.setAutoDraw(False)
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
-            else:
-                routineTimer.addTime(-0.500000)
+            # else:
+            #     routineTimer.addTime(-0.500000)
             thisExp.nextEntry()
             
         # staircase completed
         
         thisExp.nextEntry()
-    
+
+    # --- End experiment ---
+    # Flip one final time so any remaining win.callOnFlip() 
+    # and win.timeOnFlip() tasks get executed before quitting
+    win.flip()
+    win.close()
+
+    if staircase_loop2 is not None:
+        cap.release() 
+        app = QApplication(sys.argv)
+        loading_screen = progressWindow()
+        loading_screen.show()
+        # Create a QEventLoop to wait for the worker to finish
+        loop = QEventLoop()
+        # Create and start the worker thread
+        worker = Worker(actual_predict_2, predict_frames_2, level_list_2,
+                        opt, feedback, staircase_loop=staircase_loop2)
+        worker.progressChanged.connect(loading_screen.update_progress)
+        worker.finished.connect(loop.quit)
+        worker.finished.connect(loading_screen.on_finish)
+        worker.start()
+        
+        # sys.exit(app.exec())
+        loop.exec() 
+        # completed 19.0 repeats of 'ga_loop'
+        vid_frames = worker.vid_frames
+
     # completed opt2 repeats of 'opt2'
     for level in feedback:
         feedback[level]= sum(feedback[level])/len(feedback[level])
 
     feedback_key = list(feedback.keys())
     feedback_value = list(feedback.values())
-    # --- End experiment ---
-    # Flip one final time so any remaining win.callOnFlip() 
-    # and win.timeOnFlip() tasks get executed before quitting
-    win.flip()
     # save the video
     output_filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])+'.avi'  # Change the filename and extension as needed
     frame_width, frame_height = vid_frames[0].shape[1], vid_frames[0].shape[0]
@@ -943,11 +886,12 @@ def staircase_icatcher(response, str_contrast, str_spatial):
     if eyetracker:
         eyetracker.setConnectionState(False)
     thisExp.abort()  # or data files will save again on exit
-    win.close()
+    # win.close()
+    psychometric_function(feedback_value,feedback_key,response,app)
     return feedback_value,feedback_key, response 
     # core.quit()
 
-def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
+def staircase_vernier_icatcher(response,start_phase,contrast,spatial,path):
     # Ensure that relative paths start from the same directory as this script
     os_name = platform.system()
     
@@ -989,7 +933,11 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
     answers = []  # list of answers for each frame
     confidences = []
     vid_frames=[]
-    cap = cv2.VideoCapture(0)
+    predict_frames=[]
+    actual_predict=[]
+    level_list=[]
+    opt_list=[]
+    cap = cv2.VideoCapture(path)
     # --- Setup the Window ---
     win = visual.Window(
         size=[1536, 864], fullscr=True, screen=0, 
@@ -1007,20 +955,6 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
    
     feedback={}
     value=[]
-    # create a default keyboard (e.g. to check for escape)
-    # if os_name == "Windows" or os_name == "Linux" :
-    #      # --- Setup input devices ---
-    #     ioConfig = {}
-    #     # Setup iohub keyboard
-    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-
-    #     ioSession = '1'
-    #     if 'session' in expInfo:
-    #         ioSession = str(expInfo['session'])
-    #     ioServer = io.launchHubServer(window=win, **ioConfig)
-    #     eyetracker = None
-    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    # else:
     ioConfig = {}
     ioSession = ioServer = eyetracker = None
 
@@ -1338,18 +1272,24 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
                     # add timestamp to datafile
                     thisExp.timestampOnFlip(win, 'text_4.stopped')
                     text_4.setAutoDraw(False)
+
             if(rep==0):
-                    # print("gaze detection")
-                    answers,confidences,frames= predict_from_frame(cap)
-                    vid_frames += frames
-                    # print(answers)
-                    # print(confidences)
-                    # print(frames)
-                    if answers[np.argmax(confidences)]==b:
-                        correct = 1  # correct non-response
-                    else:
-                        correct = 0
-                    rep+=1
+                frames = []
+                ret, frame = cap.read()
+                buffer_size=15
+                frame_count=0
+                while ret:
+                    frames.append(frame)
+                    ret, frame = cap.read()
+                    frame_count += 1
+                    if(frame_count>buffer_size):
+                        break
+                predict_frames.append(frames)
+                actual_predict.append(b)
+                opt_list.append(opt)
+                level_list.append(level)
+                rep+=1
+
             # check for quit (typically the Esc key)
             if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
                 core.quit()
@@ -1374,13 +1314,7 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
                 thisComponent.setAutoDraw(False)
        
         # store data for staircase_loop (StairHandler)
-        staircase_loop.addResponse(correct, level)
-        # feedback.append(key_resp_2.corr)
-        # value.append(level)
-        if level in feedback:
-            feedback[level].append(correct.corr)  # Append the new value to the existing list
-        else:
-            feedback[level] = [correct]
+        staircase_loop.addResponse(np.random.choice([0,1], size=1), level)
         staircase_loop.addOtherData('key_resp_2.rt', '')
         # the Routine "central_fixation" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
@@ -1403,57 +1337,6 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "delay" ---
-        while continueRoutine and routineTimer.getTime() < 0.5:
-            # get current time
-            t = routineTimer.getTime()
-            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
-            
-            # *polygon_3* updates
-            if polygon_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                polygon_3.frameNStart = frameN  # exact frame index
-                polygon_3.tStart = t  # local t and not account for scr refresh
-                polygon_3.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(polygon_3, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'polygon_3.started')
-                polygon_3.setAutoDraw(True)
-            if polygon_3.status == STARTED:
-                # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > polygon_3.tStartRefresh + 0.5-frameTolerance:
-                    # keep track of stop time/frame for later
-                    polygon_3.tStop = t  # not accounting for scr refresh
-                    polygon_3.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'polygon_3.stopped')
-                    polygon_3.setAutoDraw(False)
-            
-            # check for quit (typically the Esc key)
-            if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-                core.quit()
-            
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
-                routineForceEnded = True
-                break
-            continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in delayComponents:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
-            
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        # --- Ending Routine "delay" ---
-        for thisComponent in delayComponents:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if routineForceEnded:
             routineTimer.reset()
@@ -1464,6 +1347,32 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
     # staircase completed
 
     thisExp.nextEntry()
+
+    # --- End experiment ---
+    # Flip one final time so any remaining win.callOnFlip() 
+    # and win.timeOnFlip() tasks get executed before quitting
+    win.flip()
+    win.close()
+    # saving the video
+
+    cap.release() 
+    app = QApplication(sys.argv)
+    loading_screen = progressWindow()
+    loading_screen.show()
+    # Create a QEventLoop to wait for the worker to finish
+    loop = QEventLoop()
+    # Create and start the worker thread
+    worker = Worker(actual_predict, predict_frames, level_list,
+                    opt, feedback, staircase_loop=staircase_loop)
+    worker.progressChanged.connect(loading_screen.update_progress)
+    worker.finished.connect(loop.quit)
+    worker.finished.connect(loading_screen.on_finish)
+    worker.start()
+    
+    # sys.exit(app.exec())
+    loop.exec() 
+    # completed 19.0 repeats of 'ga_loop'
+    vid_frames = worker.vid_frames
      
     # completed opt1 repeats of 'opt1'
     for level in feedback:
@@ -1471,11 +1380,7 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
 
     feedback_key = list(feedback.keys())
     feedback_value = list(feedback.values())
-    # --- End experiment ---
-    # Flip one final time so any remaining win.callOnFlip() 
-    # and win.timeOnFlip() tasks get executed before quitting
-    win.flip()
-    # saving the video
+    
     output_filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])+'.avi'  # Change the filename and extension as needed
     frame_width, frame_height = vid_frames[0].shape[1], vid_frames[0].shape[0]
     fps = 8  # Frames per second
@@ -1497,6 +1402,7 @@ def staircase_vernier_icatcher(response,start_phase,contrast,spatial):
     if eyetracker:
         eyetracker.setConnectionState(False)
     thisExp.abort()  # or data files will save again on exit
-    win.close()
+
+    psychometric_function(feedback_value,feedback_key,response,app)
+
     return feedback_value,feedback_key,response 
-    # core.quit()

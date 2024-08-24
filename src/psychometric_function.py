@@ -1,12 +1,13 @@
 import matplotlib
 import matplotlib.pyplot as plt
+import sys
 
-matplotlib.use('Qt5Agg')
+matplotlib.use('QtAgg')
 
-def psychometric_function(feedback,value,response):
+def psychometric_function(feedback,value,response,app):
     
     plt.plot(value,feedback, marker='o')
-        # naming the x axis
+    # naming the x axis
     if response=='1' or response=='2':
         plt.xlabel('contrast')
     elif response=='3' or response=='4':
@@ -14,10 +15,14 @@ def psychometric_function(feedback,value,response):
     else:
         plt.xlabel('phase')
 
-# naming the y axis
+    # naming the y axis
     plt.ylabel('percent correct')
     plt.title('Psychometric function')
    
 
-    plt.show()
+    plt.show(block=False)
+    plt.pause(5)
     plt.close()
+    # sys.exit(app.exec())
+    sys.exit(0)
+    pass

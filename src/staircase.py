@@ -87,20 +87,7 @@ def staircase(response, str_contrast, str_spatial):
    
     feedback={}
     value=[]
-    # # create a default keyboard (e.g. to check for escape)
-    # if os_name == "Windows" or os_name == "Linux" :
-    #      # --- Setup input devices ---
-    #     ioConfig = {}
-    #     # Setup iohub keyboard
-    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-
-    #     ioSession = '1'
-    #     if 'session' in expInfo:
-    #         ioSession = str(expInfo['session'])
-    #     ioServer = io.launchHubServer(window=win, **ioConfig)
-    #     eyetracker = None
-    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    # else:
+    # create a default keyboard (e.g. to check for escape)
     ioConfig = {}
     ioSession = ioServer = eyetracker = None
     # create a default keyboard (e.g. to check for escape)
@@ -1237,20 +1224,8 @@ def staircase_vernier(response,start_phase,contrast,spatial):
    
     feedback={}
     value=[]
-    # # create a default keyboard (e.g. to check for escape)
-    # if os_name == "Windows" or os_name == "Linux" :
-    #      # --- Setup input devices ---
-    #     ioConfig = {}
-    #     # Setup iohub keyboard
-    #     ioConfig['Keyboard'] = dict(use_keymap='psychopy')
 
-    #     ioSession = '1'
-    #     if 'session' in expInfo:
-    #         ioSession = str(expInfo['session'])
-    #     ioServer = io.launchHubServer(window=win, **ioConfig)
-    #     eyetracker = None
-    #     defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    # else:
+    # create a default keyboard (e.g. to check for escape)
     ioConfig = {}
     ioSession = ioServer = eyetracker = None
 
@@ -1718,8 +1693,6 @@ def staircase_vernier(response,start_phase,contrast,spatial):
                 key_resp_2.corr = 0;  # failed to respond (incorrectly)
         # store data for staircase_loop (StairHandler)
         staircase_loop.addResponse(key_resp_2.corr, level)
-        # feedback.append(key_resp_2.corr)
-        # value.append(level)
         if level in feedback:
             feedback[level].append(key_resp_2.corr)  # Append the new value to the existing list
         else:

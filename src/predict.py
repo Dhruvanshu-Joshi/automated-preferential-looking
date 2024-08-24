@@ -40,6 +40,7 @@ def extract_crop(frame, bbox):
     face_width = ratio[3] - ratio[2]
     my_box = np.array([face_size, face_ver, face_hor, face_height, face_width])
     return crop, my_box
+
 def load_models():
     """
     loads all relevant neural network models to perform predictions
@@ -62,9 +63,6 @@ def load_models():
                                      "icatcher+_models.zip": "d78385b3a08f3d55ce75249142d15549e4c5552d5e1231cad3b69063bb778ce9"},
                            urls={"zip_content.txt":"https://osf.io/v4w53/download",
                                  "icatcher+_models.zip":"https://osf.io/ycju8/download"})
-    # zip_content_file = GOODBOY.fetch("zip_content.txt")
-    # with open(zip_content_file, "r") as f:
-        # zip_content = [x.strip() for x in f]
     file_paths = GOODBOY.fetch("icatcher+_models.zip",
                                processor=pooch.Unzip(),
                                progressbar=True)
