@@ -21,8 +21,8 @@ from psychopy import prefs
 from psychopy import  gui, visual, core, data, event, logging, clock, colors, layout
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QEventLoop
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QEventLoop
 
 import numpy as np  # whole numpy lib is available, prepend 'np.'
 from numpy import (sin, cos, tan, log, log10, pi, average,
@@ -98,24 +98,11 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
     else:
         frameDur = 1.0 / 60.0  # could not measure, so guess
    
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
 
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
-
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    # create a default keyboard (e.g. to check for escape)
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
 
     # --- Initialize components for Routine "start_opt" ---
     if response=='1' or response=='3':
@@ -129,8 +116,6 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
         key_resp = keyboard.Keyboard()
     
     cap = cv2.VideoCapture(path)
-    # fourcc_1 = cv2.VideoWriter_fourcc(*'XVID')
-    # out_1 = cv2.VideoWriter('output_1.avi', fourcc_1, 20.0, (640, 480))
     predict_frames=[]
     actual_predict=[]
     contrast_list=[]
@@ -144,7 +129,6 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
         contrast_values=contrast_values.tolist()
         contrast_dict={}
         pos_choices = [(-16, 0), (16, 0),(-16, 0), (16, 0)]
-        # pos_choices = [(0, -16), (0, 16),(0, -16), (0, 16)]
         for element in contrast_values:
             random.shuffle(pos_choices)
             contrast_dict[element] = pos_choices[:]
@@ -161,7 +145,6 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
         spatial_values=spatial_values.tolist()
         spatial_dict={}
         pos_choices = [(-16, 0), (16, 0),(-16, 0), (16, 0)]
-        # pos_choices = [(0, -16), (0, 16),(0, -16), (0, 16)]
         for element in spatial_values:
             random.shuffle(pos_choices)
             spatial_dict[element] = pos_choices[:]
@@ -571,20 +554,6 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
                         # add timestamp to datafile
                         thisExp.timestampOnFlip(win, 'text_4.stopped')
                         text_4.setAutoDraw(False)
-                # predict the gaze direction from the collected frames
-                # if(rep==0):
-                #     # print("gaze detection")
-                    # answers,confidences,frames= predict_from_frame(cap)
-                    # vid_frames += frames
-                    # # print(answers)
-                    # # print(confidences)
-                    # # print(frames)
-                    # # print(len(frames))
-                    # if answers[np.argmax(confidences)]==b:
-                    #     correct = 1  # correct non-response
-                    # else:
-                    #     correct = 0
-                #     rep+=1
 
                 if(rep==0):
                     frames = []
@@ -602,7 +571,6 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
                     opt_list.append(opt)
                     contrast_list.append(contrast)
                     spatial_list.append(spatial)
-                    # feedback_list.append(feedback)
                     rep+=1
 
                 if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -629,20 +597,9 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
             
             # check responses
         
-              # failed to respond (incorrectly)
+            # failed to respond (incorrectly)
             # store data for psychometric_func (TrialHandler)
             psychometric_func.addData('key_resp_2.keys',"")
-# //         psychometric_func.addData('key_resp_2.corr', correct)
-# //        if opt==1 or opt==2:
-# //            if contrast in feedback:
-# //                feedback[contrast].append(correct)  # Append the new value to the existing list
-# //            else:
-# //                feedback[contrast] = [correct]
-# //        else:
-# //            if spatial in feedback:
-# //                feedback[spatial].append(correct)  # Append the new value to the existing list
-# //            else:
-# //                feedback[spatial] = [correct]
             
             # the Routine "central_fixation" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
@@ -665,121 +622,15 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
             
-            # # --- Run Routine "delay" ---
-            # while continueRoutine and routineTimer.getTime() < 0.5:
-            #     # get current time
-            #     t = routineTimer.getTime()
-            #     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            #     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            #     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            #     # update/draw components on each frame
-                
-            #     # *polygon_3* updates
-            #     if polygon_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-            #         # keep track of start time/frame for later
-            #         polygon_3.frameNStart = frameN  # exact frame index
-            #         polygon_3.tStart = t  # local t and not account for scr refresh
-            #         polygon_3.tStartRefresh = tThisFlipGlobal  # on global time
-            #         win.timeOnFlip(polygon_3, 'tStartRefresh')  # time at next scr refresh
-            #         # add timestamp to datafile
-            #         thisExp.timestampOnFlip(win, 'polygon_3.started')
-            #         polygon_3.setAutoDraw(True)
-            #     if polygon_3.status == STARTED:
-            #         # is it time to stop? (based on global clock, using actual start)
-            #         if tThisFlipGlobal > polygon_3.tStartRefresh + 0.5-frameTolerance:
-            #             # keep track of stop time/frame for later
-            #             polygon_3.tStop = t  # not accounting for scr refresh
-            #             polygon_3.frameNStop = frameN  # exact frame index
-            #             # add timestamp to datafile
-            #             thisExp.timestampOnFlip(win, 'polygon_3.stopped')
-            #             polygon_3.setAutoDraw(False)
-                
-            #     # check for quit (typically the Esc key)
-            #     if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-            #         core.quit()
-                
-            #     # check if all components have finished
-            #     if not continueRoutine:  # a component has requested a forced-end of Routine
-            #         routineForceEnded = True
-            #         break
-            #     continueRoutine = False  # will revert to True if at least one component still running
-            #     for thisComponent in delayComponents:
-            #         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            #             continueRoutine = True
-            #             break  # at least one component has not yet finished
-                
-            #     # refresh the screen
-            #     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            #         win.flip()
-            
-            # # --- Ending Routine "delay" ---
-            # for thisComponent in delayComponents:
-            #     if hasattr(thisComponent, "setAutoDraw"):
-            #         thisComponent.setAutoDraw(False)
-            # # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+            # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
-            # else:
-            #     routineTimer.addTime(-0.500000)
+
             thisExp.nextEntry()
             
         # completed 4.0 repeats of 'psychometric_func'
         
         thisExp.nextEntry()
-
-    output_file_path = 'results.txt'
-
-    # frames_dir = 'frames'
-    # os.makedirs(frames_dir, exist_ok=True)
-    
-    # with open(output_file_path, 'a') as f:
-    #     # for b, frames, contrast, spatial in zip(actual_predict, predict_frames, contrast_list, spatial_list):
-    #     for index, (b, frames, contrast, spatial) in enumerate(zip(actual_predict, predict_frames, contrast_list, spatial_list)):
-    #         answers, confidences,frames= predict_from_actual_frames(frames)
-    #         vid_frames += frames
-    #         # print(answers)
-    #         # print(confidences)
-    #         # print(frames)
-    #         # print(len(frames))
-
-    #         if answers[np.argmax(confidences)]==b:
-    #             correct = 1  # correct non-response
-    #         else:
-    #             correct = 0
-            
-    #         psychometric_func.addData('key_resp_2.corr', correct)
-    #         if opt==1 or opt==2:
-    #             if contrast in feedback:
-    #                 feedback[contrast].append(correct)  # Append the new value to the existing list
-    #             else:
-    #                 feedback[contrast] = [correct]
-    #         else:
-    #             if spatial in feedback:
-    #                 feedback[spatial].append(correct)  # Append the new value to the existing list
-    #             else:
-    #                 feedback[spatial] = [correct]
-
-    #         # Save b, answer, and additional details in the file
-    #         answer = answers[np.argmax(confidences)]
-    #         if b == 1:
-    #             b_str = "left"
-    #         elif b == 2:
-    #             b_str = "right"
-    #         else:
-    #             b_str = str(b)  # handle any other unexpected value of b
-
-    #         # Save each frame as a PNG image
-    #         for i, frame in enumerate(frames):
-    #             # Convert frame to an image (assuming the frame is a numpy array)
-    #             img = Image.fromarray(np.uint8(frame))
-    #             # Save the image with a unique name
-    #             img_path = os.path.join(frames_dir, f"frame_{index}_{i}.png")
-    #             img.save(img_path)
-
-    #         # Write the details to the file
-    #         f.write(f"b: {b} ({b_str}), Answer: {answer}\n")
-    #         f.write(f"Details: contrast={contrast}, spatial={spatial}, correct={correct}\n")
-    #         f.write("-----\n")
 
     # --- End experiment ---
     # Flip one final time so any remaining win.callOnFlip() 
@@ -788,21 +639,20 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
     win.close()
 
     app = QApplication(sys.argv)
-    # loadingScreen = LoadingScreen(actual_predict, predict_frames, contrast_list, output_file_path, opt, feedback, psychometric_func=psychometric_func)
     loading_screen = progressWindow()
     loading_screen.show()
     # Create a QEventLoop to wait for the worker to finish
     loop = QEventLoop()
     # Create and start the worker thread
     worker = Worker(actual_predict, predict_frames, contrast_list,
-                    output_file_path, opt, feedback, psychometric_func=psychometric_func)
+                    opt, feedback, psychometric_func=psychometric_func)
     worker.progressChanged.connect(loading_screen.update_progress)
     worker.finished.connect(loop.quit)
     worker.finished.connect(loading_screen.on_finish)
     worker.start()
     
     # sys.exit(app.exec())
-    loop.exec_() 
+    loop.exec() 
     # completed 19.0 repeats of 'ga_loop'
     vid_frames = worker.vid_frames
 
@@ -822,7 +672,6 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
     feedback_key = list(feedback.keys())
     feedback_value = list(feedback.values())
 
-    # print(len(vid_frames))
     output_filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])+'.avi'  # Change the filename and extension as needed
     frame_width, frame_height = vid_frames[0].shape[1], vid_frames[0].shape[0]
     fps = 8  # Frames per second
@@ -836,7 +685,6 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
         out.write(frame)
 
     out.release()
-    # psychometric_function(percent_corr,value,response)
     # these shouldn't be strictly necessary (should auto-save)
     thisExp.saveAsWideText(filename+'.csv', delim='auto')
     thisExp.saveAsPickle(filename)
@@ -845,18 +693,12 @@ def fixedincrement_icatcher(response, min, max, fixed, path):
     if eyetracker:
         eyetracker.setConnectionState(False)
     thisExp.abort()  # or data files will save again on exit
-    # win.close()
-    # assert 0
-    # sys.exit(app.exec())
+
     psychometric_function(feedback_value,feedback_key,response,app)
-    # assert 0
+
     sys.exit()
-    # core.quit()
+
     return feedback_value,feedback_key,response
-    
-    # core.quit()
-    
-    # return value,feedback,response
 
 def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spatial, path):
     # Ensure that relative paths start from the same directory as this script
@@ -912,24 +754,11 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
     else:
         frameDur = 1.0 / 60.0  # could not measure, so guess
     # --- Setup input devices ---
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
 
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
-
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    # create a default keyboard (e.g. to check for escape)
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
 
     # --- Initialize components for Routine "start_opt" ---
   
@@ -1236,7 +1065,6 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
             pos_list = phase_dict[phase]
             pos = pos_list.pop()
             phase_dict[phase]=pos_list
-            # pos=pos_choices.pop()
             
             position = pos  # Set routine start values for position
             GA.setContrast(contrast)
@@ -1266,10 +1094,8 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
             # Run 'Begin Routine' code from code
             
             if position==(-16,0):
-            # if position==(0, -16):
                 b=1
             elif position==(16,0):
-            # if position==(0, 16):
                 b=2
        
             text_4.setText("Spatial frequency: " +  f'{spatial:.3f}'+"\n"+"Contrast: "+ f'{contrast:.3f}'+"\n"+"Phase: "+ f'{phase:.3f}')
@@ -1325,19 +1151,7 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
                     # add timestamp to datafile
                     thisExp.timestampOnFlip(win, 'text_4.started')
                     text_4.setAutoDraw(True)
-                # # predict the gaze direction from the collected frames
-                # if(rep==0):
-                #     # print("gaze detection")
-                #     answers,confidences,frames= predict_from_frame(cap)
-                #     vid_frames += frames
-                #     # print(answers)
-                #     # print(confidences)
-                #     # print(frames)
-                #     if answers[np.argmax(confidences)]==b:
-                #         correct = 1  # correct non-response
-                #     else:
-                #         correct = 0
-                #     rep+=1
+                # predict the gaze direction from the collected frames
                 if(rep==0):
                     frames = []
                     ret, frame = cap.read()
@@ -1353,8 +1167,6 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
                     actual_predict.append(b)
                     opt_list.append(opt)
                     phase_list.append(phase)
-                    # spatial_list.append(spatial)
-                    # feedback_list.append(feedback)
                     rep+=1
                 if GA.status == STARTED:
                     # is it time to stop? (based on global clock, using actual start)
@@ -1407,11 +1219,6 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
             psychometric_func.addData('key_resp_2.keys',key_resp_2.keys)
             psychometric_func.addData('key_resp_2.corr', key_resp_2.corr)
             
-            # if phase in feedback:
-            #     feedback[phase].append(correct)  # Append the new value to the existing list
-            # else:
-            #     feedback[phase] = [correct]
-            
             if key_resp_2.keys != None:  # we had a response
                 psychometric_func.addData('key_resp_2.rt', key_resp_2.rt)
             # the Routine "central_fixation" was not non-slip safe, so reset the non-slip timer
@@ -1435,57 +1242,6 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
             
-            # # --- Run Routine "delay" ---
-            # while continueRoutine and routineTimer.getTime() < 0.5:
-            #     # get current time
-            #     t = routineTimer.getTime()
-            #     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            #     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            #     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            #     # update/draw components on each frame
-                
-            #     # *polygon_3* updates
-            #     if polygon_3.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-            #         # keep track of start time/frame for later
-            #         polygon_3.frameNStart = frameN  # exact frame index
-            #         polygon_3.tStart = t  # local t and not account for scr refresh
-            #         polygon_3.tStartRefresh = tThisFlipGlobal  # on global time
-            #         win.timeOnFlip(polygon_3, 'tStartRefresh')  # time at next scr refresh
-            #         # add timestamp to datafile
-            #         thisExp.timestampOnFlip(win, 'polygon_3.started')
-            #         polygon_3.setAutoDraw(True)
-            #     if polygon_3.status == STARTED:
-            #         # is it time to stop? (based on global clock, using actual start)
-            #         if tThisFlipGlobal > polygon_3.tStartRefresh + 0.5-frameTolerance:
-            #             # keep track of stop time/frame for later
-            #             polygon_3.tStop = t  # not accounting for scr refresh
-            #             polygon_3.frameNStop = frameN  # exact frame index
-            #             # add timestamp to datafile
-            #             thisExp.timestampOnFlip(win, 'polygon_3.stopped')
-            #             polygon_3.setAutoDraw(False)
-                
-            #     # check for quit (typically the Esc key)
-            #     if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
-            #         core.quit()
-                
-            #     # check if all components have finished
-            #     if not continueRoutine:  # a component has requested a forced-end of Routine
-            #         routineForceEnded = True
-            #         break
-            #     continueRoutine = False  # will revert to True if at least one component still running
-            #     for thisComponent in delayComponents:
-            #         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            #             continueRoutine = True
-            #             break  # at least one component has not yet finished
-                
-            #     # refresh the screen
-            #     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            #         win.flip()
-            
-            # # --- Ending Routine "delay" ---
-            # for thisComponent in delayComponents:
-            #     if hasattr(thisComponent, "setAutoDraw"):
-            #         thisComponent.setAutoDraw(False)
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if routineForceEnded:
                 routineTimer.reset()
@@ -1497,57 +1253,7 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
         
         thisExp.nextEntry()
 
-    output_file_path = 'results.txt'
-    # frames_dir = 'frames'
-    # os.makedirs(frames_dir, exist_ok=True)
-
-    # with open(output_file_path, 'a') as f:
-    #     # for b, frames, phase in zip(actual_predict, predict_frames, phase_list):
-    #     for index, (b, frames, phase) in enumerate(zip(actual_predict, predict_frames, phase_list)):
-    #         answers, confidences,frames= predict_from_actual_frames(frames)
-    #         vid_frames += frames
-    #         # print(answers)
-    #         # print(confidences)
-    #         # print(frames)
-    #         # print(len(frames))
-
-    #         if answers[np.argmax(confidences)]==b:
-    #             correct = 1  # correct non-response
-    #         else:
-    #             correct = 0
-            
-    #         psychometric_func.addData('key_resp_2.corr', correct)
-            
-    #         if phase in feedback:
-    #             feedback[phase].append(correct)  # Append the new value to the existing list
-    #         else:
-    #             feedback[phase] = [correct]
-
-    #         # Save b, answer, and additional details in the file
-    #         answer = answers[np.argmax(confidences)]
-    #         if b == 1:
-    #             b_str = "left"
-    #         elif b == 2:
-    #             b_str = "right"
-    #         else:
-    #             b_str = str(b)  # handle any other unexpected value of b
-
-    #         # Save each frame as a PNG image
-    #         for i, frame in enumerate(frames):
-    #             # Convert frame to an image (assuming the frame is a numpy array)
-    #             img = Image.fromarray(np.uint8(frame))
-    #             # Save the image with a unique name
-    #             img_path = os.path.join(frames_dir, f"frame_{index}_{i}.png")
-    #             img.save(img_path)
-
-    #         # Write the details to the file
-    #         f.write(f"b: {b} ({b_str}), Answer: {answer}\n")
-    #         f.write(f"Details: phase={phase}, correct={correct}\n")
-    #         f.write("-----\n")
-
     # completed 19.0 repeats of 'ga_loop'
-
-
     # --- End experiment ---
     # Flip one final time so any remaining win.callOnFlip() 
     # and win.timeOnFlip() tasks get executed before quitting
@@ -1555,21 +1261,19 @@ def fixedincrement_vernier_icatcher(response, min_phase, max_phase, contrast,spa
     win.close()
 
     app = QApplication(sys.argv)
-    # loadingScreen = LoadingScreen(actual_predict, predict_frames, contrast_list, output_file_path, opt, feedback, psychometric_func=psychometric_func)
     loading_screen = progressWindow()
     loading_screen.show()
     # Create a QEventLoop to wait for the worker to finish
     loop = QEventLoop()
     # Create and start the worker thread
     worker = Worker(actual_predict, predict_frames, phase_list,
-                    output_file_path, opt, feedback, psychometric_func=psychometric_func)
+                    opt, feedback, psychometric_func=psychometric_func)
     worker.progressChanged.connect(loading_screen.update_progress)
     worker.finished.connect(loop.quit)
     worker.finished.connect(loading_screen.on_finish)
     worker.start()
     
-    # sys.exit(app.exec())
-    loop.exec_() 
+    loop.exec() 
     # completed 19.0 repeats of 'ga_loop'
     vid_frames = worker.vid_frames
 

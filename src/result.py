@@ -2,61 +2,47 @@ import sys
 import os
 import numpy as np
 from PIL import Image
-# from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QProgressBar, QApplication
-# from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from predict import *
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QProgressBar
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt, QThread, pyqtSignal, QEventLoop
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QProgressBar
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtCore import Qt, QThread, pyqtSignal, QEventLoop
 
 # Function to process frames
-def process_frames(predict_data, predict_frames, levels_or_contrast, output_file_path, opt, feedback, staircase_loop=None, psychometric_func=None, progress_callback=None):
+def process_frames(predict_data, predict_frames, levels_or_contrast, opt, feedback, staircase_loop=None, psychometric_func=None, progress_callback=None):
     frames_dir = 'frames'
-    os.makedirs(frames_dir, exist_ok=True)
 
     vid_frames = []  # Initialize vid_frames to store all frames
 
     total_frames = sum(len(predict_frames) for frames in predict_frames)
-    # total_frames = len(predict_frames)
     processed_frames = 0
 
-    with open(output_file_path, 'a') as f:
-        for index, (b, frames, level_or_contrast) in enumerate(zip(predict_data, predict_frames, levels_or_contrast)):
-            answers, confidences, frames = predict_from_actual_frames(frames)
-            vid_frames += frames
-            processed_frames += len(frames)
+    for index, (b, frames, level_or_contrast) in enumerate(zip(predict_data, predict_frames, levels_or_contrast)):
+        answers, confidences, frames = predict_from_actual_frames(frames)
+        vid_frames += frames
+        processed_frames += len(frames)
 
-            if answers[np.argmax(confidences)] == b:
-                correct = 1  # correct non-response
-            else:
-                correct = 0
+        if answers[np.argmax(confidences)] == b:
+            correct = 1  # correct non-response
+        else:
+            correct = 0
 
-            if psychometric_func:
-                psychometric_func.addData('key_resp_2.corr', correct)
-            elif staircase_loop:
-                staircase_loop.addResponse(correct, level_or_contrast)
+        if psychometric_func:
+            psychometric_func.addData('key_resp_2.corr', correct)
+        elif staircase_loop:
+            staircase_loop.addResponse(correct, level_or_contrast)
 
-            if level_or_contrast in feedback:
-                feedback[level_or_contrast].append(correct)
-            else:
-                feedback[level_or_contrast] = [correct]
+        if level_or_contrast in feedback:
+            feedback[level_or_contrast].append(correct)
+        else:
+            feedback[level_or_contrast] = [correct]
 
-            answer = answers[np.argmax(confidences)]
-            b_str = "left" if b == 1 else "right" if b == 2 else str(b)
+        answer = answers[np.argmax(confidences)]
+        b_str = "left" if b == 1 else "right" if b == 2 else str(b)
 
-            for i, frame in enumerate(frames):
-                img = Image.fromarray(np.uint8(frame))
-                img_path = os.path.join(frames_dir, f"frame_{index}_{i}.png")
-                img.save(img_path)
-
-            f.write(f"b: {b} ({b_str}), Answer: {answer}\n")
-            f.write(f"Details: opt={opt}, level_or_contrast={level_or_contrast}, correct={correct}\n")
-            f.write("-----\n")
-
-            # Update progress
-            if progress_callback:
-                progress = int((processed_frames / total_frames) * 100)
-                progress_callback.emit(progress)
+        # Update progress
+        if progress_callback:
+            progress = int((processed_frames / total_frames) * 100)
+            progress_callback.emit(progress)
 
     return vid_frames  # Return the accumulated frames
 
@@ -65,12 +51,11 @@ class Worker(QThread):
     progressChanged = pyqtSignal(int)
     finished = pyqtSignal(list)  # Emit vid_frames when done
 
-    def __init__(self, predict_data, predict_frames, levels_or_contrast, output_file_path, opt, feedback, staircase_loop=None, psychometric_func=None, parent=None):
+    def __init__(self, predict_data, predict_frames, levels_or_contrast, opt, feedback, staircase_loop=None, psychometric_func=None, parent=None):
         super(Worker, self).__init__(parent)
         self.predict_data = predict_data
         self.predict_frames = predict_frames
         self.levels_or_contrast = levels_or_contrast
-        self.output_file_path = output_file_path
         self.opt = opt
         self.feedback = feedback
         self.staircase_loop = staircase_loop
@@ -79,7 +64,7 @@ class Worker(QThread):
 
     def run(self):
         self.vid_frames = process_frames(self.predict_data, self.predict_frames, self.levels_or_contrast,
-                                    self.output_file_path, self.opt, self.feedback,
+                                    self.opt, self.feedback,
                                     staircase_loop=self.staircase_loop,
                                     psychometric_func=self.psychometric_func,
                                     progress_callback=self.progressChanged)
@@ -118,7 +103,7 @@ class progressWindow(QMainWindow):
         self.main_layout.addWidget(self.text_label)
 
         # Load the image
-        pixmap = QPixmap('load.png')
+        pixmap = QPixmap('../PyQT_screens/imgs/load.png')
 
         # Create a QLabel to display the image
         self.image_label = QLabel(self)
@@ -162,13 +147,6 @@ if __name__ == '__main__':
     loading_screen = progressWindow()
     loading_screen.show()
 
-    # # Example data (replace with actual data)
-    # predict_data = []  # Your data here
-    # predict_frames = []  # Your data here
-    # levels_or_contrast = []  # Your data here
-    # output_file_path = 'output.txt'
-    # opt = 1
-    # feedback = {}
     psychometric_func = None  # Replace with your psychometric function object
 
      # Generate test data with blank frames
@@ -179,7 +157,6 @@ if __name__ == '__main__':
     predict_data = [0] * num_frames  # Dummy data
     predict_frames = [[blank_frame for _ in range(5)] for _ in range(num_frames)]  # List of blank frames
     levels_or_contrast = [0] * num_frames  # Dummy levels or contrast values
-    output_file_path = 'output.txt'
     opt = 1
     feedback = {}
     value={}
@@ -188,20 +165,19 @@ if __name__ == '__main__':
     loop = QEventLoop()
     # Create and start the worker thread
     worker = Worker(predict_data, predict_frames, levels_or_contrast,
-                    output_file_path, opt, feedback, psychometric_func=psychometric_func)
+                    opt, feedback, psychometric_func=psychometric_func)
     worker.progressChanged.connect(loading_screen.update_progress)
     worker.finished.connect(loop.quit)
     worker.finished.connect(loading_screen.on_finish)
     worker.start()
 
-    # sys.exit(app.exec())
-    loop.exec_() 
+    loop.exec() 
 
     import matplotlib.pyplot as plt
     plt.plot(value,feedback, marker='o')
     plt.xlabel('contrast')
 
-# naming the y axis
+    # naming the y axis
     plt.ylabel('percent correct')
     plt.title('Psychometric function')
    

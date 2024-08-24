@@ -88,23 +88,10 @@ def staircase(response, str_contrast, str_spatial):
     feedback={}
     value=[]
     # create a default keyboard (e.g. to check for escape)
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
+    # create a default keyboard (e.g. to check for escape)
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
     # --- Initialize components for Routine "start_exp" ---
     text = visual.TextStim(win=win, name='text',
         text='Welcome to visual stimuli.\nContrast Sensitivity Experiments:\nPress 1 for stimulus in two hemiscreens.\nPress 2 for stimulus in four quadrants.\nSpatial Frequency Sensitivity Experiments:\nPress 3 for stimulus in two hemiscreens.\nPress 4 for stimulus in four quadrants.\n\n',
@@ -1238,24 +1225,11 @@ def staircase_vernier(response,start_phase,contrast,spatial):
     feedback={}
     value=[]
     # create a default keyboard (e.g. to check for escape)
-    if os_name == "Windows" or os_name == "Linux" :
-         # --- Setup input devices ---
-        ioConfig = {}
-        # Setup iohub keyboard
-        ioConfig['Keyboard'] = dict(use_keymap='psychopy')
+    ioConfig = {}
+    ioSession = ioServer = eyetracker = None
 
-        ioSession = '1'
-        if 'session' in expInfo:
-            ioSession = str(expInfo['session'])
-        ioServer = io.launchHubServer(window=win, **ioConfig)
-        eyetracker = None
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
-    else:
-        ioConfig = {}
-        ioSession = ioServer = eyetracker = None
-
-        # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='ptb')
+    # create a default keyboard (e.g. to check for escape)
+    defaultKeyboard = keyboard.Keyboard(backend='ptb')
 
     # --- Initialize components for Routine "start_opt" ---
     if response=='5':
@@ -1718,8 +1692,6 @@ def staircase_vernier(response,start_phase,contrast,spatial):
                 key_resp_2.corr = 0;  # failed to respond (incorrectly)
         # store data for staircase_loop (StairHandler)
         staircase_loop.addResponse(key_resp_2.corr, level)
-        # feedback.append(key_resp_2.corr)
-        # value.append(level)
         if level in feedback:
             feedback[level].append(key_resp_2.corr)  # Append the new value to the existing list
         else:
