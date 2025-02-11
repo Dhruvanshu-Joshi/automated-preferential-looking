@@ -140,6 +140,13 @@ To execute the program on your system, please follow these steps.
     ```sh
     pip install -r requirements.txt
     ```
+    Ps- You might face errors with psychopy installations when you try to download all the required packages. 
+
+    * First step is to make sure you have Microsoft Visual C++ 14.0 or greater installed. You can follow solutions from [here](https://stackoverflow.com/questions/64261546/how-to-solve-error-microsoft-visual-c-14-0-or-greater-is-required-when-inst).
+
+    * Next, follow the two steps mentioned [here](https://github.com/astropy/halotools/issues/813#issuecomment-552165844).
+
+    * If the above steps do not solve it for you, you can refer this [link](https://github.com/Shazam213/automated-preferential-looking/tree/visual-stimuli#getting-started).
 * Navigate to the src folder:
     ```sh
     cd src
@@ -160,9 +167,7 @@ To execute the program on your system, please follow these steps.
 
     ```
 
-    * In case you run into absence of ```freetype.dll```, download it from[here](https://drive.google.com/drive/folders/1KxNelo4lmJIQHOrChmyu1MH3nsUQQyC1) and use its path.
-
-Ps- You might face errors while psychopy installations. You can refer this [link](https://github.com/Shazam213/automated-preferential-looking/tree/visual-stimuli#getting-started).
+    * In case you run into absence of ```freetype.dll```, download it from [here](https://drive.google.com/drive/folders/1KxNelo4lmJIQHOrChmyu1MH3nsUQQyC1) and use its path.
 
 * The final application and some results on actual infants can be found [here](https://drive.google.com/drive/folders/1EyiCTeTBk5worOztW1KTkYCRiYcNhhuq?usp=drive_link).
 
@@ -202,7 +207,7 @@ Alas, the end of Summer of Code shouldn't be the end of this project! With an am
 
 * Collaborations with healthcare professionals and researchers to refine and validate the application's use in clinical settings.
 
-Also due to the unavailibility of traditional eye tracking devices, eye tracker integration was not possible so instead for those experiments currently input is being taken through keyboard. But later it can also be implemented easily using the API developed by [Ioannis Valasakis](https://github.com/wizofe/ao-baby-tracker)
+Also due to the unavailibility of traditional eye tracking devices, eye tracker integration was not possible so instead for those experiments currently input is being taken through keyboard. But later it can also be implemented easily using the API developed by [Ioannis Valasakis](https://github.com/wizofe/ao-baby-tracker).
 
 -----------------------------------------------------
 
@@ -215,6 +220,6 @@ I would like to extend my sincere thanks to my mentor, Soham Mulye, whose guidan
 
 I would also like to extend my appreciation to the developers of [iCatcher+](https://github.com/icatcherplus/icatcher_plus), the eye-tracking model that has been seamlessly integrated into the program for gaze detection and test automation.
 
-I would also like to extend my appreciation to the developers of [Look-it daaset](https://osf.io/5u9df/). This is a dataset of video and annotation files contributed to the automated eye gaze coding project iCatcher+and was also used here to test the software on actual infants.
+I would also like to extend my appreciation to the developers of [Look-it dataset](https://osf.io/5u9df/). This is a dataset of video and annotation files contributed to the automated eye gaze coding project iCatcher+and was also used here to test the software on actual infants.
 
 With the generous support of Google's open-source initiatives, I hope that I've sown the seeds of a useful program and provided valuable code suggestions. These contributions have the potential to make a significant impact in clinical settings in the future. Thank you, Google!

@@ -2,7 +2,7 @@ numpy
 matplotlib
 psychopy
 opencv-python
-tkinter
+tk
 torch>=1.11.0
 torchvision>=0.12
 Pillow 
@@ -13,7 +13,4 @@ batch-face
 pathos
 psychopy_sounddevice
 psychtoolbox
-psychopy.visual
-psychopy.visual.backends.pygletbackend
-psychopy.visual.line
 PyQt6
